@@ -10,55 +10,39 @@ class Navigation
 {
 private:
     Menu main_menu;
-    Menu account_menu;
-    Menu transfer_menu;
-    Menu exchange_menu;
 
 public:
 
-    Navigation() {
-      main_menu.addItem("Account and balance");
-      main_menu.addItem("Transfer");
-      main_menu.addItem("Exchange");
-      main_menu.addItem("Logout");
+  Navigation() :
+    main_menu("Bank", Menu::ID::MAIN)
+  {
+    Menu* account_menu = new Menu("Account and balance", Menu::ID::ACCOUNT);
+    account_menu->addItem("Salary account");
+    account_menu->addItem("Savings account");
+    main_menu.addSubmenu(account_menu);
 
-      account_menu.addItem("Savings account");
+    Menu* transfer_menu = new Menu("Transfer", Menu::ID::TRANSFER);
+    main_menu.addSubmenu(transfer_menu);
 
-      transfer_menu.addItem("Transfer");
-
-      exchange_menu.addItem("Exchange");
-    }
+    Menu* exchange_menu = new Menu("Exchange", Menu::ID::EXCHANGE);
+    main_menu.addSubmenu(exchange_menu);
+  }
 
 
   void run()
   {
-    bool running = true;
     // std::vector<std::string> *current_menu = &main_options;
     // std::vector<std::string> *previous_menu = nullptr;
-    main_menu.display();
-    while(running) {
+    Menu *current = &main_menu;
+    while (current != nullptr) {
+      current->display();
       size_t choice;
       std::cin >> choice;
-      // Check if choice is last item in the menu
-      // TODO: Add a menu of menus
-      switch (choice-1) {
-      case 0:
-        account_menu.display();
-        break;
-      case 1:
-        transfer_menu.display();
-        break;
-      case 2:
-        exchange_menu.display();
-        break;
-      default:
-        std::cout << "Invalid choice\n";
-        running = false;
-        break;
-      }
+      std::cout << '\n';
+      current = current->enter(choice);
     }
 
-    std::cout << "Exit\n";
+    std::cout << "Exit.\n";
   }
 
 };

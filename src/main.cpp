@@ -7,6 +7,6 @@ int main(int argc, char *argv[])
   std::cout << "Welcome to BANK!\n";
   login();
   Navigation nav;
-  nav.display();
+  nav.run();
   return 0;
 }

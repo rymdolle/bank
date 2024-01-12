@@ -8,3 +8,4 @@ BANK
 * Pontus Höglund
 * Faisal Adam
 * Mariia Omelchenko
+* Ludwig Oelker

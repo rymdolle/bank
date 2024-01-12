@@ -24,7 +24,7 @@ bool login()
     std::cout << "Enter pincode: ";
     std::string password = user_input();
 
-    User user("John Doe", "0000");
+    User user("JD", "0000");
     // TODO: Add login verification
     if (user.verify(username, password)) {
       std::cout << "\nLogin successful.\n"

@@ -7,3 +7,4 @@ Nils Wahlberg
 Daniel Goldington
 Pontus Höglund
 Faisal Adam
+Mariia Omelchenko

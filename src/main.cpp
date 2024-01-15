@@ -5,8 +5,10 @@
 int main(int argc, char *argv[])
 {
   std::cout << "Welcome to BANK!\n";
-  login();
-  Navigation nav;
-  nav.run();
+  if (login()) {
+    Navigation nav;
+    nav.run();
+  }
+  std::cout << "Exit.\n";
   return 0;
 }

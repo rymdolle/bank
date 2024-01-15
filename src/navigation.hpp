@@ -11,21 +11,29 @@ class Navigation
 private:
     Menu main_menu;
 
+  enum MenuID {
+    MAIN,
+    ACCOUNT,
+    TRANSFER,
+    EXCHANGE,
+  };
+
 public:
 
   Navigation() :
-    main_menu("Bank", Menu::ID::MAIN)
+    main_menu("Bank", MAIN)
   {
-    Menu* account_menu = new Menu("Account and balance", Menu::ID::ACCOUNT);
-    account_menu->addItem("Salary account");
-    account_menu->addItem("Savings account");
-    main_menu.addSubmenu(account_menu);
+    Menu* menu;
+    menu = new Menu("Account and balance", ACCOUNT);
+    menu->addItem("Salary account");
+    menu->addItem("Savings account");
+    main_menu.addSubmenu(menu);
 
-    Menu* transfer_menu = new Menu("Transfer", Menu::ID::TRANSFER);
-    main_menu.addSubmenu(transfer_menu);
+    menu = new Menu("Transfer", TRANSFER);
+    main_menu.addSubmenu(menu);
 
-    Menu* exchange_menu = new Menu("Exchange", Menu::ID::EXCHANGE);
-    main_menu.addSubmenu(exchange_menu);
+    menu = new Menu("Exchange", EXCHANGE);
+    main_menu.addSubmenu(menu);
   }
 
 
@@ -40,9 +48,16 @@ public:
       std::cin >> choice;
       std::cout << '\n';
       current = current->enter(choice);
+      if (!current)
+        break;
+      switch (current->id) {
+      case ACCOUNT:
+      case TRANSFER:
+      case EXCHANGE:
+      default:
+        break;
+      }
     }
-
-    std::cout << "Exit.\n";
   }
 
 };

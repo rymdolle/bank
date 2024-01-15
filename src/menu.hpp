@@ -1,34 +1,28 @@
 #ifndef BANK_MENU_HPP
 #define BANK_MENU_HPP
 
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <iostream>
 
 class Menu {
 public:
-
-  enum class ID {
-    MAIN,
-    ACCOUNT,
-    TRANSFER,
-    EXCHANGE,
-    NONE = -1,
-  };
+  const int id;
+  const std::string title;
 
 private:
   Menu *parent_;
-  std::string title_;
   std::vector<Menu*> options;
-  Menu::ID id_;
+  void *data;
 
 public:
-    Menu(std::string name, Menu::ID id)
-    {
-      parent_ = nullptr;
-      title_ = name;
-      id_ = id;
-    }
+  Menu(std::string name) : Menu(name, -1) {}
+  Menu(std::string name, int id) :
+    id(id), title(name)
+  {
+    parent_ = nullptr;
+  }
 
   ~Menu()
   {
@@ -40,20 +34,22 @@ public:
 
     void display()
     {
-      std::cout << title_ << '\n';
-      for (size_t i = 0; i < title_.length(); ++i)
+      // Print menu title
+      std::cout << title << '\n';
+      for (size_t i = 0; i < title.length(); ++i)
         std::cout << '=';
       std::cout << '\n';
 
+      // Print numbered menu options
       for (size_t i = 0; i < options.size(); ++i) {
-        std::cout << i+1 << ". " << options[i]->title_ << '\n';
+        std::cout << std::setw(3) << i+1 << ". " << options[i]->title << '\n';
       }
 
       // Checks if item has a parent menu and add exit or back
       if (parent_ != nullptr)
-        std::cout << "0. Back" << std::endl;
+        std::cout << std::setw(3) << 0 << ". Back" << std::endl;
       else
-        std::cout << "0. Exit" << std::endl;
+        std::cout << std::setw(3) << 0 << ". Exit" << std::endl;
     }
 
     Menu* enter(size_t submenu) {
@@ -61,7 +57,7 @@ public:
         return parent_;
 
       if (submenu > options.size()) {
-        std::cout << "Invalid submenu\n";
+        std::cerr << "Invalid submenu\n";
         // return current menu
         return this;
       }
@@ -70,7 +66,7 @@ public:
     }
 
     void addItem(const std::string& name) {
-      Menu* item = new Menu(name, Menu::ID::NONE);
+      Menu* item = new Menu(name);
       item->parent_ = this;
       options.push_back(item);
     }

@@ -1,31 +1,28 @@
 CXX=g++
-RM=rm -f
 LDLIBS=
 LDFLAGS=-g
 CXXINCLUDE=
 CXXFLAGS=-g $(CXXINCLUDE) -Wall -std=c++17
 
 SRCS=\
-	account.hpp \
-	bank.hpp \
-	login.hpp \
-	main.cpp \
-	navigation.hpp \
-	transaction.hpp \
-	user.hpp
-
-
+	main.cpp
 
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 
-all: $(OBJS)
+all: bank
+
+bank: $(OBJS)
 	$(CXX) $(LDFLAGS) -o bank $(OBJS) $(LDLIBS)
 
+.PHONY: clean depend
 depend: .depend
 
 .depend: $(SRCS)
 	rm -f ./.depend
 	$(CXX) $(CXXFLAGS) -MM $^>>./.depend;
+
+clean:
+	rm -f $(OBJS) ./.depend
 
 include .depend

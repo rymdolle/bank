@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 
+#include "account.hpp"
+
 class Menu {
 public:
   const int id;
@@ -49,7 +51,7 @@ public:
       if (parent_ != nullptr)
         std::cout << std::setw(3) << 0 << ". Back" << std::endl;
       else
-        std::cout << std::setw(3) << 0 << ". Exit" << std::endl;
+        std::cout << std::setw(3) << 0 << ". Logout" << std::endl;
     }
 
     Menu* enter(size_t submenu) {

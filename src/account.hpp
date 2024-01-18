@@ -13,30 +13,29 @@ class Account
     // Make it possible to assign them to a user DONE
     // Generate random names and values from a list
 private:
-    std::string type;
-    double balance;
-    int id;
+    std::string type_;
+    double balance_;
+    int id_;
 
 public:
-    inline static std::vector<Account> accVec;
 
     Account(std::string type, double balance,int id) {
-        type = type;
-        balance = balance;
-        id = id;
+        type_ = type;
+        balance_ = balance;
+        id_ = id;
     }
 
 
     const std::string &getType() const {
-        return type;
+        return type_;
     }
 
     double getBalance() const {
-        return balance;
+        return balance_;
     }
 
     int getId() const {
-        return id;
+        return id_;
     }
 
 

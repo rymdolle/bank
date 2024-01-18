@@ -26,21 +26,22 @@ bool login()
     std::string password = user_input();
 
     // TODO: Generate random accounts from set list of names and numbers?
-    // TODO: Move to respective classes?
     // Account creation and addition to user vector
-    Account::accVec.emplace_back("Savings Account", 1000.0, 1);
-    Account::accVec.emplace_back("Savings Account", 1000.0, 1);
-    Account::accVec.emplace_back("Regular Account", 2500.0, 1);
-    Account::accVec.emplace_back("Salary Account", 300.0, 1);
+    std::vector<Account> accVec;
+    accVec.emplace_back("Savings Account", 1000.10, 1);
+    accVec.emplace_back("Regular Account", 2500.25, 1);
+    accVec.emplace_back("Salary Account", 300.30, 1);
+    accVec.emplace_back("Savings Account", 5000.50, 2);
 
     // User creation and addition to user vector
-    User::userVec.emplace_back("JD", "1111", 1);
-    User::userVec.emplace_back("BG", "2222", 2);
-    User::userVec.emplace_back("MJ", "3333", 3);
-    User::userVec.emplace_back("IA", "4444", 4);
-    User::userVec.emplace_back("GA", "5555", 5);
+    std::vector<User> userVec;
+    userVec.emplace_back("JD", "1111", 1);
+    userVec.emplace_back("BG", "2222", 2);
+    userVec.emplace_back("MJ", "3333", 3);
+    userVec.emplace_back("IA", "4444", 4);
+    userVec.emplace_back("SL", "5555", 5);
 
-      for (const auto& user : User::userVec) {
+      for (const auto& user : userVec) {
           if (user.verify(username, password)) {
               std::cout << "\nLogin successful.\n"
                         << "Welcome " << username << "!\n\n";

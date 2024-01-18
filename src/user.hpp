@@ -13,7 +13,6 @@ private:
     std::string password_;
     int id_;
 public:
-    inline static std::vector<User> userVec;
 
     User(std::string name, std::string password, int id) {
         name_ = name;
@@ -22,7 +21,6 @@ public:
 
     }
 
-
     std::string toString() const{
         return "Name: " + name_ + "\nPin: " + getPassword() + "\nID: " + std::to_string(id_) + "\n";
     }
@@ -30,7 +28,6 @@ public:
     bool verify(std::string& name, std::string& password) const {
         return name == name_ && password_ == password;
     }
-
 
     // Getters
 

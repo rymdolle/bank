@@ -8,10 +8,7 @@
 
 class Account
         {
-    // TODO
-    // Add struct for how accounts look DONE
-    // Make it possible to assign them to a user DONE
-    // Generate random names and values from a list
+    // TODO: Generate random account names and values from an array
 private:
     std::string type_;
     double balance_;

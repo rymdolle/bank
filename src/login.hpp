@@ -14,7 +14,7 @@ std::string user_input()
   return text;
 }
 
-bool login()
+bool login(User &currentUser, std::vector<User> *userVec)
 {
   int count = 0;
   do {
@@ -25,26 +25,14 @@ bool login()
     std::cout << "Enter pin code:";
     std::string password = user_input();
 
-    // TODO: Generate random accounts from set list of names and numbers?
-    // Account creation and addition to user vector
-    std::vector<Account> accVec;
-    accVec.emplace_back("Savings Account", 1000.10, 1);
-    accVec.emplace_back("Regular Account", 2500.25, 1);
-    accVec.emplace_back("Salary Account", 300.30, 1);
-    accVec.emplace_back("Savings Account", 5000.50, 2);
 
-    // User creation and addition to user vector
-    std::vector<User> userVec;
-    userVec.emplace_back("JD", "1111", 1);
-    userVec.emplace_back("BG", "2222", 2);
-    userVec.emplace_back("MJ", "3333", 3);
-    userVec.emplace_back("IA", "4444", 4);
-    userVec.emplace_back("SL", "5555", 5);
-
-      for (const auto& user : userVec) {
+    // Runs through the list of users and calls the verify method to check if it is a valid login
+      for (const auto &user : *userVec) {
           if (user.verify(username, password)) {
               std::cout << "\nLogin successful.\n"
                         << "Welcome " << username << "!\n\n";
+              // Assigns the user object currentUser the valid user object
+              currentUser = user;
               return true;
           }
       }

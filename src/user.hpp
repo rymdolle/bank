@@ -18,8 +18,9 @@ public:
         name_ = name;
         password_ = password;
         id_ = id;
-
     }
+
+    User();
 
     std::string toString() const{
         return "Name: " + name_ + "\nPin: " + getPassword() + "\nID: " + std::to_string(id_) + "\n";

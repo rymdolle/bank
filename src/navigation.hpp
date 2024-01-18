@@ -6,13 +6,13 @@
 #include <iostream>
 
 #include "menu.hpp"
+#include "user.hpp"
 
 class Navigation
 {
 private:
     Menu main_menu;
     User &currentUser;
-    std::vector<User> &userVec;
     std::vector<Account> &accVec;
 
   enum MenuID {
@@ -24,10 +24,10 @@ private:
 
 public:
 
-  Navigation(User &loggedUser, std::vector<User> &users, std::vector<Account> &accounts) :
-    userVec(users),
-    accVec(accounts),
-    main_menu("Bank", MAIN), currentUser(loggedUser) {
+  Navigation(User &loggedUser, std::vector<Account> &accounts) :
+    main_menu("Bank", MAIN),
+    currentUser(loggedUser),
+    accVec(accounts) {
 
       Menu* menu;
     menu = new Menu("Account and balance", ACCOUNT);
@@ -43,7 +43,7 @@ public:
   }
 
 
-    void showUserAccounts(const std::vector<User> &users, const std::vector<Account> &accounts) {
+    void showUserAccounts(const std::vector<Account> &accounts) {
         // Grabs the corresponding userId to link to accId
         int targetId = currentUser.getId();
 
@@ -72,7 +72,7 @@ public:
         break;
       switch (current->id) {
       case ACCOUNT:
-          showUserAccounts(userVec, accVec);
+          showUserAccounts(accVec);
       case TRANSFER:
       case EXCHANGE:
       default:

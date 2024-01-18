@@ -1,6 +1,9 @@
 #ifndef USER_H
 #define USER_H
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -44,6 +47,23 @@ public:
         return id_;
     }
 
+public:
+  static std::vector<User> loadFromFile(std::string filename)
+  {
+    std::ifstream file(filename);
+    std::vector<User> users;
+    std::string line;
+    while (std::getline(file, line)) {
+      std::stringstream ss(line);
+      std::string username, password;
+      std::getline(ss, username, ':');
+      std::getline(ss, password, ':');
+      int id;
+      ss >> id;
+      users.emplace_back(username, password, id);
+    }
+    return users;
+  }
 };
 
 

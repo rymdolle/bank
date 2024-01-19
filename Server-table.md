@@ -1,18 +1,18 @@
-Table 
-[  ] Main
+# Table
+## Main
 - mainid
 - userref
 - datacreate
-- 
-[  ] User
+
+## User
 - userid
 - userlogin
 - userpassword 
-[  ] Account
+## Account
 - accountid
 - userref
 - accountmoney 
-[  ] Transaction 
+## Transaction
 - transactionid
 - userref
 - transactionaccountref

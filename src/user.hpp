@@ -3,26 +3,48 @@
 
 #include <string>
 #include <vector>
+
 #include "account.hpp"
 
-class User
-{
-public:
-  User(std::string name, std::string password)
-  {
-    name_ = name;
-    password_ = password;
-  }
-
-  bool verify(std::string name, std::string password)
-  {
-    return name == name_ && password_ == password;
-  }
+class User {
 
 private:
-  std::vector<Account> acounts_;
-  std::string name_;
-  std::string password_;
+    std::string name_;
+    std::string password_;
+    int id_;
+public:
+
+    User(std::string name, std::string password, int id) {
+        name_ = name;
+        password_ = password;
+        id_ = id;
+    }
+
+    User();
+
+    std::string toString() const{
+        return "Name: " + name_ + "\nPin: " + getPassword() + "\nID: " + std::to_string(id_) + "\n";
+    }
+
+    bool verify(std::string& name, std::string& password) const {
+        return name == name_ && password_ == password;
+    }
+
+    // Getters
+
+    const std::string &getName() const {
+        return name_;
+    }
+
+    const std::string &getPassword() const {
+        return password_;
+    }
+
+    int getId() const {
+        return id_;
+    }
+
 };
+
 
 #endif /* USER_H */

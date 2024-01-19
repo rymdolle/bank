@@ -4,12 +4,16 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
 #include "menu.hpp"
 
 class Navigation
 {
 private:
     Menu main_menu;
+    User &currentUser;
+    std::vector<User> &userVec;
+    std::vector<Account> &accVec;
 
   enum MenuID {
     MAIN,
@@ -20,10 +24,12 @@ private:
 
 public:
 
-  Navigation() :
-    main_menu("Bank", MAIN)
-  {
-    Menu* menu;
+  Navigation(User &loggedUser, std::vector<User> &users, std::vector<Account> &accounts) :
+    userVec(users),
+    accVec(accounts),
+    main_menu("Bank", MAIN), currentUser(loggedUser) {
+
+      Menu* menu;
     menu = new Menu("Account and balance", ACCOUNT);
     menu->addItem("Salary account");
     menu->addItem("Savings account");
@@ -37,7 +43,21 @@ public:
   }
 
 
-  void run()
+    void showUserAccounts(const std::vector<User> &users, const std::vector<Account> &accounts) {
+        // Grabs the corresponding userId to link to accId
+        int targetId = currentUser.getId();
+
+        // Prints out the accounts depending on what the currentUsers ID is
+        std::cout << "\tType:" << "\t\t\t\tAmount(Sek):\n";
+        for (const auto &Account : accVec) {
+            if (Account.getId() == targetId) {
+                std::cout << "\t" << Account.getType() << "\t\t\t" << Account.getBalance() << "\n";
+            }
+        }
+        std::cout << "\n";
+    }
+
+    void run()
   {
     // std::vector<std::string> *current_menu = &main_options;
     // std::vector<std::string> *previous_menu = nullptr;
@@ -52,6 +72,7 @@ public:
         break;
       switch (current->id) {
       case ACCOUNT:
+          showUserAccounts(userVec, accVec);
       case TRANSFER:
       case EXCHANGE:
       default:

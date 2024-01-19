@@ -1,11 +1,7 @@
 # Table
-## Main
-- mainid
-- userref
-- datacreate
-
 ## User
 - userid
+- username
 - userlogin
 - userpassword
 
@@ -19,4 +15,4 @@
 - userref
 - transactionaccountref
 - transactionalname 
-- transactiontouserref
+- transactionmoney

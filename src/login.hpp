@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 #include "user.hpp"
 #include "account.hpp"
@@ -25,7 +26,6 @@ bool login(User &currentUser)
     std::cout << "Enter pin code:";
     std::string password = user_input();
 
-    // TODO: Add login verification
     for (User &user : User::loadFromFile("data/users.txt")) {
       if (user.verify(username, password)) {
         std::cout << "\nLogin successful.\n"

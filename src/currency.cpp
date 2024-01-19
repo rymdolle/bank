@@ -24,19 +24,17 @@ Currency::Currency(std::string line)
   std::getline(csv, acode_, '\t');
 
   std::getline(csv, value, '\t');
-  if (!value.empty())
-    ncode_ = std::stoi(value);
+  ncode_ = std::stoi(value);
 
   std::getline(csv, value, '\t');
-  if (!value.empty() && value != "N.A.")
-    minor_ = std::stoi(value);
-  else
-    minor_ = 0;
+  minor_ = std::stoi(value);
 }
 
 Currency& Currency::get(std::string acode)
 {
-  return currencies_[acode];
+  if (currencies_.count(acode) > 0)
+    return currencies_[acode];
+  return currencies_["XXX"];
 }
 
 std::string Currency::format(int64_t amount)

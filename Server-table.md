@@ -8,6 +8,7 @@
 ## Account
 - accountid
 - userref
+- accountname
 - accountmoney
  
 ## Transaction
@@ -16,3 +17,4 @@
 - transactionaccountref
 - transactionalname 
 - transactionmoney
+- comment

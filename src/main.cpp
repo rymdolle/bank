@@ -1,12 +1,15 @@
 #include <iostream>
-
 #include "login.hpp"
 #include "navigation.hpp"
 #include "account.hpp"
 #include "user.hpp"
+#include "currency.hpp"
 
 int main(int argc, char *argv[])
 {
+  // Load currencies
+  Currency::loadFromFile("data/currency.tsv");
+
     // TODO: Generate random accounts from set list of names and numbers?
     // Account creation which is put into account vector
     std::vector<Account> accVec;

@@ -14,7 +14,7 @@ std::string user_input()
   return text;
 }
 
-bool login(User &currentUser, std::vector<User> *userVec)
+bool login(User &currentUser)
 {
   int count = 0;
   do {
@@ -25,19 +25,15 @@ bool login(User &currentUser, std::vector<User> *userVec)
     std::cout << "Enter pin code:";
     std::string password = user_input();
 
-
-    // Runs through the list of users and calls the verify method to check if it is a valid login
-      for (const auto &user : *userVec) {
-          if (user.verify(username, password)) {
-              std::cout << "\nLogin successful.\n"
-                        << "Welcome " << username << "!\n\n";
-              // Assigns the user object currentUser the valid user object
-              currentUser = user;
-              return true;
-          }
+    // TODO: Add login verification
+    for (User &user : User::loadFromFile("data/users.txt")) {
+      if (user.verify(username, password)) {
+        std::cout << "\nLogin successful.\n"
+                  << "Welcome " << username << "!\n\n";
+        currentUser = user;
+        return true;
       }
-
-      // TODO: Add login verification
+    }
 
     ++count;
     std::cout << "\nUsername or pin code is incorrect\n"

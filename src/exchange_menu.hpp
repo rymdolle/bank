@@ -19,6 +19,10 @@ public:
 
   void enter(int menu) override
   {
+    for (auto& c : Currency::get()) {
+      std::cout << std::setw(3) << i+1 << ". "
+                << options[i]->title << '\n';
+    }
   }
 };
 

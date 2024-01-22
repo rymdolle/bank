@@ -6,7 +6,8 @@ CXXFLAGS=-g $(CXXINCLUDE) -Wall -std=c++17
 
 SRCS=\
 	main.cpp \
-	currency.cpp
+	currency.cpp \
+	account.cpp
 
 OBJS=$(subst .cpp,.o,$(SRCS))
 

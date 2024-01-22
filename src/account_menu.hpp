@@ -2,6 +2,7 @@
 #define BANK_ACCOUNT_MENU_HPP
 
 #include "menu.hpp"
+#include "user.hpp"
 #include "account.hpp"
 #include "currency.hpp"
 #include <iostream>
@@ -10,21 +11,30 @@
 class AccountMenu : public Menu
 {
 private:
-  std::vector<Account> &accounts_;
+  User& user_;
 
 public:
-  AccountMenu(std::vector<Account> &accounts) :
-    Menu("Accounts"),
-    accounts_(accounts)
+  AccountMenu(User& user) :
+    Menu("Accounts"), user_(user)
   {
   }
 
-  void enter(int menu) override
+  size_t size() override
+  {
+    return 0;
+  }
+
+  Menu* enter(int menu) override
+  {
+    return this;
+  }
+
+  void display(int menu) override
   {
     // Print numbered menu options
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"
               << "Balance:\n";
-    for (Account& a : accounts_) {
+    for (Account& a : user_.getAccounts()) {
       std::cout << "  " << std::left << std::setw(30) << a.getType()
                 << Currency::get(a.currency).format(a.getBalance())
                 << '\n';

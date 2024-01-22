@@ -8,6 +8,7 @@ file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(bank
         src/account.hpp
+        src/account.cpp
         src/bank.hpp
         src/login.hpp
         src/main.cpp

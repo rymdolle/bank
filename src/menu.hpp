@@ -14,7 +14,6 @@ public:
 
 private:
   Menu *parent_;
-  int selected;
   std::vector<Menu*> options;
 
 public:
@@ -41,7 +40,7 @@ public:
   }
 
   // Virtual function that has to be implemented
-  virtual void enter() = 0;
+  virtual void enter(int menu) = 0;
 
   void display()
   {
@@ -52,9 +51,6 @@ public:
       std::cout << std::setw(3) << i+1 << ". "
                 << options[i]->title << '\n';
     }
-
-    // Call virtual enter function
-    enter();
 
     // Checks if item has a parent menu and add exit or back
     if (parent_ != nullptr)
@@ -67,13 +63,13 @@ public:
     if (submenu == 0) // Back or exit
       return parent_;
 
+    enter(submenu);
+
     if (submenu > options.size()) {
-      std::cerr << "Invalid submenu\n";
       // return current menu
       return this;
     }
 
-    selected = submenu;
     return options[submenu - 1];
   }
 

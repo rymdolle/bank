@@ -22,4 +22,4 @@ public:
   }
 };
 
-#endif /* BANK_ACCOUNT_MENU_HPP */
+#endif /* BANK_EXCHANGE_MENU_HPP */

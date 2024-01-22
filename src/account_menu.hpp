@@ -19,7 +19,7 @@ public:
   {
   }
 
-  void enter() override
+  void enter(int menu) override
   {
     // Print numbered menu options
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"

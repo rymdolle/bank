@@ -17,7 +17,7 @@ public:
   {
   }
 
-  void enter() override
+  void enter(int menu) override
   {
   }
 };

@@ -1,6 +1,7 @@
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
 
+#include <cctype>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -36,10 +37,15 @@ public:
     Menu *current = &main_menu;
     while (current != nullptr) {
       current->display();
-      size_t choice;
-      std::cin >> choice;
+      std::string text;
+      std::getline(std::cin, text);
       std::cout << '\n';
-      current = current->select(choice);
+      if (!text.empty() && std::isdigit(text[0])) {
+        int choice = std::stoi(text);
+        current = current->select(choice);
+      } else {
+        std::cout << "Invalid input\n";
+      }
     }
   }
 

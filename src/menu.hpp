@@ -41,6 +41,11 @@ public:
     std::cout << '\n';
   }
 
+  virtual size_t size()
+  {
+    return options.size();
+  }
+
   // Virtual function that has to be implemented
   virtual void enter(int menu) = 0;
 
@@ -69,6 +74,10 @@ public:
       return parent_;
 
     if (submenu > options.size()) {
+      if (submenu > size()) {
+        std::cout << "Invalid input\n";
+      }
+
       // return current menu
       return this;
     }

@@ -25,6 +25,7 @@ public:
 
   std::string format(int64_t amount);
 
+  static std::map<std::string, Currency>& get();
   static Currency& get(std::string acode);
   static void loadFromFile(std::string filename);
 };

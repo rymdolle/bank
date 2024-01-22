@@ -15,11 +15,13 @@ public:
 private:
   Menu *parent_;
   std::vector<Menu*> options;
+  int id_;
 
 public:
   Menu(std::string name) :
     title(name)
   {
+    id_ = 0;
     parent_ = nullptr;
   }
 
@@ -46,6 +48,8 @@ public:
   {
     print_title();
 
+    enter(id_);
+
     // Print numbered menu options
     for (size_t i = 0; i < options.size(); ++i) {
       std::cout << std::setw(3) << i+1 << ". "
@@ -60,10 +64,9 @@ public:
   }
 
   Menu* select(size_t submenu) {
+    id_ = submenu;
     if (submenu == 0) // Back or exit
       return parent_;
-
-    enter(submenu);
 
     if (submenu > options.size()) {
       // return current menu

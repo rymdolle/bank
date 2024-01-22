@@ -12,6 +12,10 @@ add_executable(bank
         src/login.hpp
         src/main.cpp
         src/menu.hpp
+        src/main_menu.hpp
+        src/exchange_menu.hpp
+        src/transfer_menu.hpp
+        src/account_menu.hpp
         src/currency.cpp
         src/currency.hpp
         src/navigation.hpp

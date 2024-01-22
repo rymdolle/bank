@@ -10,17 +10,16 @@
 
 class Menu {
 public:
-  const int id;
   const std::string title;
 
 private:
   Menu *parent_;
+  int selected;
   std::vector<Menu*> options;
 
 public:
-  Menu(std::string name) : Menu(name, -1) {}
-  Menu(std::string name, int id) :
-    id(id), title(name)
+  Menu(std::string name) :
+    title(name)
   {
     parent_ = nullptr;
   }
@@ -32,14 +31,21 @@ public:
       delete item;
   }
 
-
-  virtual void display()
+  void print_title()
   {
     // Print menu title
     std::cout << title << '\n';
     for (size_t i = 0; i < title.length(); ++i)
       std::cout << '=';
     std::cout << '\n';
+  }
+
+  // Virtual function that has to be implemented
+  virtual void enter() = 0;
+
+  void display()
+  {
+    print_title();
 
     // Print numbered menu options
     for (size_t i = 0; i < options.size(); ++i) {
@@ -47,14 +53,17 @@ public:
                 << options[i]->title << '\n';
     }
 
+    // Call virtual enter function
+    enter();
+
     // Checks if item has a parent menu and add exit or back
     if (parent_ != nullptr)
-      std::cout << std::setw(3) << 0 << ". Back" << std::endl;
+      std::cout << std::right << std::setw(3) << 0 << ". Back" << std::endl;
     else
-      std::cout << std::setw(3) << 0 << ". Logout" << std::endl;
+      std::cout << std::right << std::setw(3) << 0 << ". Logout" << std::endl;
   }
 
-  Menu* enter(size_t submenu) {
+  Menu* select(size_t submenu) {
     if (submenu == 0) // Back or exit
       return parent_;
 
@@ -64,13 +73,8 @@ public:
       return this;
     }
 
+    selected = submenu;
     return options[submenu - 1];
-  }
-
-  void addItem(const std::string& name) {
-    Menu* item = new Menu(name);
-    item->parent_ = this;
-    options.push_back(item);
   }
 
   void addSubmenu(Menu *sub)

@@ -26,6 +26,11 @@ public:
       std::cout << std::setw(3) << i++ << '.' << ' ' << c.first << '\n';
     }
   }
+
+  size_t size() override
+  {
+    return Currency::get().size();
+  }
 };
 
 #endif /* BANK_EXCHANGE_MENU_HPP */

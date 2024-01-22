@@ -2,7 +2,12 @@
 #define BANK_MAIN_MENU_HPP
 
 #include "menu.hpp"
+#include "user.hpp"
 #include "currency.hpp"
+#include "account_menu.hpp"
+#include "transfer_menu.hpp"
+#include "exchange_menu.hpp"
+#include <cstddef>
 #include <iostream>
 #include <map>
 #include <string>
@@ -10,14 +15,16 @@
 class MainMenu : public Menu
 {
 private:
-
 public:
-  MainMenu() :
+  MainMenu(User& user) :
     Menu("Bank")
   {
+    addSubmenu(new AccountMenu(user));
+    addSubmenu(new TransferMenu());
+    addSubmenu(new ExchangeMenu());
   }
 
-  void enter(int menu) override
+  void display(int menu) override
   {
   }
 };

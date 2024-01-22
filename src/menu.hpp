@@ -14,7 +14,7 @@ public:
 
 private:
   Menu *parent_;
-  std::vector<Menu*> options;
+  std::vector<Menu*> options_;
   int id_;
 
 public:
@@ -25,12 +25,7 @@ public:
     parent_ = nullptr;
   }
 
-  virtual ~Menu()
-  {
-    // Delete all submenus
-    for (auto item : options)
-      delete item;
-  }
+  virtual ~Menu() {}
 
   void print_title()
   {
@@ -41,24 +36,30 @@ public:
     std::cout << '\n';
   }
 
-  virtual size_t size()
-  {
-    return options.size();
-  }
 
   // Virtual function that has to be implemented
-  virtual void enter(int menu) = 0;
+  virtual void display(int menu) = 0;
+
+  virtual Menu* enter(int menu)
+  {
+    return options_[menu - 1];
+  }
+
+  virtual size_t size()
+  {
+    return options_.size();
+  }
 
   void display()
   {
     print_title();
 
-    enter(id_);
+    display(id_);
 
     // Print numbered menu options
-    for (size_t i = 0; i < options.size(); ++i) {
+    for (size_t i = 0; i < options_.size(); ++i) {
       std::cout << std::setw(3) << i+1 << ". "
-                << options[i]->title << '\n';
+                << options_[i]->title << '\n';
     }
 
     // Checks if item has a parent menu and add exit or back
@@ -73,7 +74,7 @@ public:
     if (submenu == 0) // Back or exit
       return parent_;
 
-    if (submenu > options.size()) {
+    if (submenu > size()) {
       if (submenu > size()) {
         std::cout << "Invalid input\n";
       }
@@ -82,13 +83,13 @@ public:
       return this;
     }
 
-    return options[submenu - 1];
+    return enter(submenu);
   }
 
   void addSubmenu(Menu *sub)
   {
     sub->parent_ = this;
-    options.push_back(sub);
+    options_.push_back(sub);
   }
 };
 

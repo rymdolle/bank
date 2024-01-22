@@ -8,28 +8,16 @@
 
 #include "menu.hpp"
 #include "main_menu.hpp"
-#include "exchange_menu.hpp"
-#include "account_menu.hpp"
-#include "transfer_menu.hpp"
 #include "user.hpp"
 
 class Navigation
 {
 private:
     MainMenu main_menu;
-    std::vector<Account> &accounts_;
-
 public:
-
-  Navigation(std::vector<Account> &accounts) :
-    main_menu(),
-    accounts_(accounts) {
-
-    main_menu.addSubmenu(new AccountMenu(accounts));
-
-    main_menu.addSubmenu(new TransferMenu());
-
-    main_menu.addSubmenu(new ExchangeMenu());
+  Navigation(User& user) :
+    main_menu(user)
+  {
   }
 
   void run()

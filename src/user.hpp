@@ -64,6 +64,16 @@ public:
     }
     return users;
   }
+
+  std::vector<Account> getAccounts()
+  {
+    std::vector<Account> accounts;
+    for (Account& a : Account::getAccounts()) {
+      if (a.getId() == id_)
+        accounts.push_back(a);
+    }
+    return accounts;
+  }
 };
 
 

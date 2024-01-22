@@ -17,9 +17,20 @@ public:
   {
   }
 
-  void enter(int menu) override
+  void display(int menu) override
   {
   }
+
+  size_t size() override
+  {
+    return 0;
+  }
+
+  Menu* enter(int menu) override
+  {
+    return this;
+  }
+
 };
 
 #endif /* BANK_TRANSFER_MENU_HPP */

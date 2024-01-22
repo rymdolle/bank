@@ -30,6 +30,11 @@ Currency::Currency(std::string line)
   minor_ = std::stoi(value);
 }
 
+std::map<std::string, Currency>&  Currency::get()
+{
+  return currencies_;
+}
+
 Currency& Currency::get(std::string acode)
 {
   if (currencies_.count(acode) > 0)

@@ -3,6 +3,7 @@
 
 #include "menu.hpp"
 #include "currency.hpp"
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <string>
@@ -19,9 +20,10 @@ public:
 
   void enter(int menu) override
   {
+    int i = 1;
+    std::cout << "EXCHANGE MENU " << menu << '\n';
     for (auto& c : Currency::get()) {
-      std::cout << std::setw(3) << i+1 << ". "
-                << options[i]->title << '\n';
+      std::cout << std::setw(3) << i++ << '.' << ' ' << c.first << '\n';
     }
   }
 };

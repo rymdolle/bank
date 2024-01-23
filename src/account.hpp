@@ -6,11 +6,14 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 
 #include "transaction.hpp"
 
 class Account
+        {
+
 {
 private:
 	std::string accountName_;

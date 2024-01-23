@@ -22,7 +22,7 @@ public:
   {
     addSubmenu(new AccountMenu(user));
     addSubmenu(new TransferMenu(user));
-    addSubmenu(new ExchangeMenu());
+    addSubmenu(new ExchangeMenu(user));
   }
 
   Menu* enter(std::string input) override

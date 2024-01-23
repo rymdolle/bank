@@ -16,7 +16,7 @@ private:
 	std::string accountName_;
 	double balance_;
 	int userId_, id_;
-	std::string currency;
+	std::string currency_;
     static std::vector<Account> accounts_;
 
 public:
@@ -25,7 +25,7 @@ public:
 		balance_ = balance;
 		id_ = id;
 		userId_ = userId;
-	        currency = "SEK";
+	        currency_ = "SEK";
 
 	}
 	std::string getAccountName() const {
@@ -35,6 +35,10 @@ public:
 	double getBalance() const {
 		return balance_;
 	}
+
+  std::string getCurrency() const {
+    return currency_;
+  }
 
 	int getId() const {
 		return id_;

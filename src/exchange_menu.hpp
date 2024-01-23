@@ -37,7 +37,7 @@ public:
           accIndex = userInputInt;
 
           // Get the logged users account and assign it to a vector for processing
-          const std::vector<Account>& accounts = user_.getAccounts();
+          std::vector<Account>& accounts = user_.getAccounts();
           Account targetAcc = accounts[accIndex-1];
           // Save the chosen accounts currency and balance
           targetCurrency = targetAcc.getCurrency();

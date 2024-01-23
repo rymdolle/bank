@@ -2,6 +2,7 @@
 #define ACCOUNT_MENU_HPP
 
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -224,8 +225,23 @@ public:
       return accounts_;
     }
 
+  static void writeToFile(std::string filename, std::vector<Account> accounts)
+  {
+    std::ofstream file(filename);
+    file << "ACCOUNT NAME\tUID\tID \tBALANCE\tCURRENCY\n";
+    for (auto& account : accounts) {
+      int64_t balance{static_cast<int64_t>(account.getBalance())};
+      file << account.getAccountName() << '\t'
+           << account.getUserId()      << '\t'
+           << account.getId()          << '\t'
+           << balance    << '\t'
+           << account.getCurrency()    << '\n';
+    }
+  }
+
   static std::vector<Account> loadFromFile(std::string filename)
   {
+    std::vector<Account> accounts;
     std::ifstream file(filename);
     std::string line;
     std::getline(file, line); // Skip first line
@@ -240,9 +256,9 @@ public:
       ss >> accountId;
       ss >> balance;
       std::getline(ss, currency);
-      accounts_.emplace_back(name, balance, userId, accountId);
+      accounts.emplace_back(name, balance, userId, accountId);
     }
-    return accounts_;
+    return accounts;
   }
 };
 

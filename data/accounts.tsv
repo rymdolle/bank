@@ -1,28 +1,28 @@
-ACCOUNT NAME	UID	BALANCE	CURRENCY
-Savings Account	1000	100010	SEK
-Regular Account	1000	250025	SEK
-Salary Account	1000	30030	SEK
+ACCOUNT NAME	UID	ID 	BALANCE	CURRENCY
+Savings Account	1000	1002 	100010	SEK
+Regular Account	1000	1003 	250025	SEK
+Salary Account	1000	1004 	30030	SEK
 
-Savings Account	1001	19050	SEK
-Regular Account	1001	1290112	SEK
-Salary Account	1001	340010	SEK
+Savings Account	1001	1006 	19050	SEK
+Regular Account	1001	1007 	1290112	SEK
+Salary Account	1001	1008 	340010	SEK
 
-Savings Account	1002	327239	SEK
-Regular Account	1002	101250	SEK
-Salary Account	1002	546800	SEK
+Savings Account	1002	1010 	327239	SEK
+Regular Account	1002	1011 	101250	SEK
+Salary Account	1002	1012 	546800	SEK
 
-Savings Account	1003	223100	SEK
-Regular Account	1003	246800	SEK
-Salary Account	1003	1420600	SEK
+Savings Account	1003	1014 	223100	SEK
+Regular Account	1003	1015 	246800	SEK
+Salary Account	1003	1016 	1420600	SEK
 
-Savings Account	1004	90780	SEK
-Regular Account	1004	15899	SEK
-Salary Account	1004	30571	SEK
+Savings Account	1004	1018 	90780	SEK
+Regular Account	1004	1019 	15899	SEK
+Salary Account	1004	1020 	30571	SEK
 
-Savings Account	1005	15510	SEK
-Regular Account	1005	2179	SEK
-Salary Account	1005	260950	SEK
+Savings Account	1005	1022 	15510	SEK
+Regular Account	1005	1023 	2179	SEK
+Salary Account	1005	1024 	260950	SEK
 
-Savings Account	1006	9992	SEK
-Regular Account	1006	560200	SEK
-Salary Account	1006	13980	SEK
+Savings Account	1006	1026 	9992	SEK
+Regular Account	1006	1027 	560200	SEK
+Salary Account	1006	1028 	13980	SEK

@@ -25,7 +25,7 @@ public:
 
   User() {}
 
-    std::string toString() const{
+    std::string toString() const {
         return "Name: " + name_ + "\nPin: " + getPassword() + "\nID: " + std::to_string(id_) + "\n";
     }
 
@@ -35,11 +35,11 @@ public:
 
     // Getters
 
-    const std::string &getName() const {
+    const std::string& getName() const {
         return name_;
     }
 
-    const std::string &getPassword() const {
+    const std::string& getPassword() const {
         return password_;
     }
 
@@ -47,22 +47,21 @@ public:
         return id_;
     }
 
-public:
-  static std::vector<User> loadFromFile(std::string filename)
-  {
-    std::ifstream file(filename);
-    std::vector<User> users;
-    std::string line;
-    while (std::getline(file, line)) {
-      std::stringstream ss(line);
-      std::string username, password;
-      std::getline(ss, username, ':');
-      std::getline(ss, password, ':');
-      int id;
-      ss >> id;
-      users.emplace_back(username, password, id);
-    }
-    return users;
+    static std::vector<User> loadFromFile(std::string filename)
+    {
+        std::ifstream file(filename);
+        std::vector<User> users;
+        std::string line;
+        while (std::getline(file, line)) {
+            std::stringstream ss(line);
+            std::string username, password;
+            std::getline(ss, username, ':');
+            std::getline(ss, password, ':');
+            int id;
+            ss >> id;
+            users.emplace_back(username, password, id);
+        }
+        return users;
   }
 
   std::vector<Account> getAccounts()

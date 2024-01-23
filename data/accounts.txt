@@ -1,0 +1,4 @@
+1004:1000:1000.0:Salary account
+1004:1001:1000.0:Savings account
+1004:1002:1000.0:Car account
+1004:1003:1000.0:Some account

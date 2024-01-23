@@ -12,10 +12,10 @@ int main(int argc, char *argv[])
   // Load accounts
   Account::loadFromFile("data/accounts.tsv");
 
-    User currentUser("nan", "0",0);
+    User currentUser;
 
   std::cout << "Welcome to BANK!\n";
-    if (login(currentUser)) {
+  while (login(currentUser)) {
       Navigation nav(currentUser);
         nav.run();
     }

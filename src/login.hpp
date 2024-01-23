@@ -95,8 +95,7 @@ bool login(User &currentUser)
     }
 
     ++count;
-    std::cout << "\nUsername or pin code is incorrect\n"
-              << "Please try again.\n";
+    std::cout << "\nUsername or pin code is incorrect (" << count << "/3).\n";
   } while (count < 3);
   return false;
 }

@@ -9,6 +9,7 @@
 #include "menu.hpp"
 #include "main_menu.hpp"
 #include "user.hpp"
+#include "transaction.hpp" // Flytta denna hit
 
 class Navigation
 {
@@ -36,7 +37,6 @@ public:
       }
     }
   }
-
 };
 
 #endif /* NAVIGATION_H */

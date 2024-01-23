@@ -9,34 +9,15 @@
 #include "menu.hpp"
 #include "main_menu.hpp"
 #include "user.hpp"
-#include "transaction.hpp" // Flytta denna hit
 
 class Navigation
 {
 private:
     MainMenu main_menu;
 public:
-  Navigation(User& user) :
-    main_menu(user)
-  {
-  }
+  Navigation(User& user);
 
-  void run()
-  {
-    Menu *current = &main_menu;
-    while (current != nullptr) {
-      current->display();
-      std::string text;
-      std::getline(std::cin, text);
-      std::cout << '\n';
-      if (!text.empty() && std::isdigit(text[0])) {
-        int choice = std::stoi(text);
-        current = current->select(choice);
-      } else {
-        std::cout << "Invalid input\n";
-      }
-    }
-  }
+  void run();
 };
 
 #endif /* NAVIGATION_H */

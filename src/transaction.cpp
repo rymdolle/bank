@@ -6,7 +6,7 @@ void Transaction::transfer(const User& currentUser)
 {
 	int i = 0, firstChoice, secondChoice;
 	double amount;
-	std::vector<Account> userAccounts = Account::getAccounts(currentUser.getId());
+	std::vector<Account> userAccounts = currentUser.getAccounts();
 
 	std::cout << "From which account?\n";
 	std::cin >> firstChoice;
@@ -42,7 +42,7 @@ void Transaction::transfer(const User& currentUser)
 void Transaction::withdraw(const User& currentUser)
 {
 	int choice, amount;
-	std::vector<Account> userAccounts = Account::getAccounts(currentUser.getId());
+	std::vector<Account> userAccounts = currentUser.getAccounts();
 
 	std::cout << "From which account?\n";
 	std::cin >> choice;
@@ -69,7 +69,7 @@ void Transaction::withdraw(const User& currentUser)
 void Transaction::deposit(const User& currentUser)
 {
 	int choice, amount;
-	std::vector<Account> userAccounts = Account::getAccounts(currentUser.getId());
+	std::vector<Account> userAccounts = currentUser.getAccounts();
 
 	std::cout << "To which account?\n";
 	std::cin >> choice;

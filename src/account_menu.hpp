@@ -35,8 +35,8 @@ public:
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"
               << "Balance:\n";
     for (Account& a : user_.getAccounts()) {
-      std::cout << "  " << std::left << std::setw(30) << a.getType()
-                << Currency::get(a.currency).format(a.getBalance())
+      std::cout << "  " << std::left << std::setw(30) << a.getAccountName()
+                << Currency::get(a.getCurrency()).format(a.getBalance())
                 << '\n';
     }
   }

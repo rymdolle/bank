@@ -20,7 +20,7 @@ public:
     Menu("Bank")
   {
     addSubmenu(new AccountMenu(user));
-    addSubmenu(new TransferMenu());
+    addSubmenu(new TransferMenu(user));
     addSubmenu(new ExchangeMenu());
   }
 

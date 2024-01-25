@@ -10,8 +10,8 @@ Navigation::Navigation(User& user)  :
 void Navigation::run()
 {
   Menu *current = &main_menu;
-  std::string text;
   while (current != nullptr) {
+    std::string text;
     current->display();
     std::getline(std::cin, text);
     std::cout << '\n';

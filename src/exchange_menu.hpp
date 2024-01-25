@@ -30,11 +30,6 @@ public:
   {
     return this;
   }
-
-  size_t size() override
-  {
-    return Currency::get().size();
-  }
 };
 
 #endif /* BANK_EXCHANGE_MENU_HPP */

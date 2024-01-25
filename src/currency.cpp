@@ -67,3 +67,31 @@ void Currency::loadFromFile(std::string filename)
     currencies_[c.acode_] = c;
   }
 }
+
+int Currency::parse(std::string text)
+{
+  int amount = 0;
+  bool negative = false;
+  if (!text.empty() && text[0] == '-') {
+    negative = true;
+    text = text.substr(1);
+  }
+
+  if (!text.empty() && std::isdigit(text[0])) {
+    size_t end;
+    amount = std::stoi(text, &end, 10);
+    amount *= pow10_[minor_];
+    if (end < text.length()) {
+      if (text[end] == '.') {
+        text = text.substr(end + 1);
+        int minor = std::stoi(text, &end, 10);
+        amount += minor;
+      }
+    }
+  }
+
+  if (negative)
+    amount = -amount;
+
+  return amount;
+}

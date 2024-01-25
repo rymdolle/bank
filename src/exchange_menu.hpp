@@ -18,16 +18,15 @@ public:
   {
   }
 
-  void display(int menu) override
+  void display() override
   {
     int i = 1;
-    std::cout << "EXCHANGE MENU " << menu << '\n';
     for (auto& c : Currency::get()) {
       std::cout << std::setw(3) << i++ << '.' << ' ' << c.first << '\n';
     }
   }
 
-  Menu* enter(int menu) override
+  Menu* enter(std::string input) override
   {
     return this;
   }

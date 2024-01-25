@@ -24,13 +24,17 @@ public:
     return 0;
   }
 
-  Menu* enter(int menu) override
+  Menu* enter(std::string input) override
   {
+    if (input.empty())
+      return parent_;
     return this;
   }
 
-  void display(int menu) override
+  void display() override
   {
+    print_title();
+
     // Print numbered menu options
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"
               << "Balance:\n";
@@ -39,6 +43,10 @@ public:
                 << Currency::get(a.getCurrency()).format(a.getBalance())
                 << '\n';
     }
+
+    std::cout << '\n'
+              << "Press [Enter] to go back\n";
+    //std::cout << std::right << std::setw(3) << 0 << ". Back\n";
   }
 };
 

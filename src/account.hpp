@@ -13,8 +13,6 @@
 
 class Account
         {
-
-{
 private:
 	std::string accountName_;
 	double balance_;

@@ -65,7 +65,8 @@ public:
       break;
     }
     case step::TRANSFER: {
-      std::cout << "Transfered " << amount
+      auto currency = user_.getAccounts()[account_from].getCurrency();
+      std::cout << "Transfered " << Currency::get(currency).format(amount)
                 << " from " << '\''
                 << user_.getAccounts()[account_from].getAccountName()
                 << '\''
@@ -95,7 +96,8 @@ public:
       account_to = std::stoi(input);
       state = step::AMOUNT ;
     } else if (state == step::AMOUNT) {
-      amount = std::stoi(input);
+      auto currency = user_.getAccounts()[account_from].getCurrency();
+      amount = Currency::get(currency).parse(input);
       state = step::TRANSFER ;
     } else if (state == step::TRANSFER) {
       return parent_;

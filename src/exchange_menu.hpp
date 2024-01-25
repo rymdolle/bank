@@ -12,7 +12,7 @@ class ExchangeMenu : public Menu
 {
 private:
 User &user_;
-int steps = 0;
+int step = 0;
 double amount = 0;
 int accIndex = 0;
 std::string chosenCurrency;
@@ -27,41 +27,51 @@ public:
   {
       std::cout << "Current menu:" << menu << std::endl;
 
-      if (steps == 1) {
-          accIndex = menu-1;
+      if (step == 1) {
+          accIndex = menu;
           const std::vector<Account>& accounts = user_.getAccounts();
-          Account targetAcc = accounts[accIndex];
+          Account targetAcc = accounts[accIndex-1];
           std::cout << "  " << std::left << std::setw(30) << targetAcc.getType()
                     << Currency::get(targetAcc.currency).format(targetAcc.getBalance())
                     << '\n'
                     << "  Now chose what amount and hit [Enter] for the next step\n";
           // Add error handling
+          step++;
+      } else if(step == 2) {
           amount = menu;
-          steps++;
-      } else if(steps == 2) {
           int i = 1;
           for (auto& c : Currency::get()) {
               std::cout << std::setw(3) << i++ << '.' << ' ' << c.first << '\n';
           }
           std::cout << "  No choose what currency you want to exchange the chosen amount to.\n"
                     << "  Hit [Enter] to finish\n";
-          chosenCurrency = menu;
-          steps++;
-      } else if (steps == 3) {
+          step++;
+      } else if (step == 3) {
+          chosenCurrency = std::to_string(menu);
+          std::cout << "This is the chosen currency: " << chosenCurrency<< std::endl;
 
+          int i = 0;
+          for (auto& c : Currency::get()) {
+              i++;
+              if (i == menu) {
+                  chosenCurrency = c.first;
+              }
+          }
+          // Needs currency data
           // Add if complete amount was chosen transfer the whole account otherwise create new.
-          std::cout << "  You have chosen: " << chosenCurrency << " and you will receive: " << "xxxx.xx\n"
-                    << "  based on your original amount: " << amount << std::endl;
+          std::cout << "  The chosen amount of " << amount << " will be exchanged to " << chosenCurrency << " INSERT_END_RESULT\n";
+          step = 0;
       } else {
           int i = 1;
           for (Account& a : user_.getAccounts()) {
               std::cout << "  " << i++ << "." << std::left << std::setw(30) << a.getType()
                         << Currency::get(a.currency).format(a.getBalance())
                         << '\n';
+
           }
           std::cout    << "  Select what account, amount and unique currency identifier(XXX) \n  "
                        << "all seperated by hitting the [Enter] key" << std::endl;
-          steps++;
+          step++;
       }
     int i = 1;
     for (auto& c : Currency::get()) {

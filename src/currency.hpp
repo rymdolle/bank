@@ -29,6 +29,7 @@ public:
   static std::map<std::string, Currency>& get();
   static Currency& get(std::string acode);
   static void loadFromFile(std::string filename);
+
 };
 
 #endif /* BANK_CURRENCY_HPP */

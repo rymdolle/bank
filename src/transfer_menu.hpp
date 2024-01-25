@@ -13,18 +13,19 @@ class TransferMenu : public Menu
 {
 private:
   User& user_;
-  int step;
 
 public:
   TransferMenu(User& user) :
     Menu("Transfer"), user_(user)
   {
-    step = 0;
   }
 
-  void display(int menu) override
+  void display() override
   {
-    std::cout << "Select an account to transfer from\n";
+    print_title();
+
+    std::cout << '\n'
+              << "Select an account to transfer from\n";
     int i = 1;
     for (auto& a : user_.getAccounts()) {
       std::cout << std::setw(3) << i++ << '.' << ' '
@@ -38,12 +39,9 @@ public:
     return 3;
   }
 
-  Menu* enter(int menu) override
+  Menu* enter(std::string input) override
   {
-    std::cout << "Step: " << step << '\n';
-    std::cout << "Menu: " << menu << '\n';
-    if (menu == 0)
-      step = 0;
+    std::cout << "Menu: " << input << '\n';
     return this;
   }
 

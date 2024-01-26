@@ -76,7 +76,6 @@ public:
 
   void createAccount(Account newAccount)
   {
-    std::cout << "New account has been created\n";
     accounts_.push_back(newAccount);
   }
 

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 
 #include "currency.hpp"
 
@@ -66,7 +67,6 @@ void Currency::loadFromFile(std::string filename)
     Currency c(line);
     if (c.acode_ == "SEK") {
       c.loadExchangeRates("data/exchange.tsv");
-      std::cout << c.acode_ << std::endl;
     }
     currencies_[c.acode_] = c;
   }
@@ -74,10 +74,13 @@ void Currency::loadFromFile(std::string filename)
 
 void Currency::loadExchangeRates(std::string filename)
 {
-  std::ifstream file(filename);
-  std::string line;
-  std::getline(file, line);
-  std::cout << "this is a line: " << file.is_open() << "\n";
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return;
+    }
+    std::string line;
+    std::getline(file, line);
   while (std::getline(file, line)) {
     std::stringstream tsv(line);
     std::string value;
@@ -91,9 +94,7 @@ void Currency::loadExchangeRates(std::string filename)
 
     exchangeRates[targetCurr] = xRate;
   }
-  for(auto [key,value] : exchangeRates) {
-    std::cout << key << std::endl;
-  }
+  file.close();
 }
 
 int Currency::parse(std::string text)

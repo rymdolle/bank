@@ -33,7 +33,7 @@ public:
   void loadExchangeRates(std::string filename);
 
   double exchangeMonies(std::string acode, double amount) {
-    return exchangeRates[acode]*amount;
+    return amount/exchangeRates[acode];
   }
 };
 

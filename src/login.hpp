@@ -71,7 +71,7 @@ std::string read_password()
     }
   }
 
-#if defined (__linux__) || defined [__APPLE__]
+#if defined (__linux__) || defined (__APPLE__)
 
   // Restore flags to original state
   tcsetattr(STDIN_FILENO, TCSANOW, &old);

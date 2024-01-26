@@ -31,7 +31,7 @@ public:
     state = step::FROM_ACCOUNT;
   }
 
-  void display() override
+  void display() const override
   {
     print_title();
 

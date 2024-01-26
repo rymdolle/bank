@@ -46,7 +46,7 @@ public:
     return options_[choice - 1];
   }
 
-  void display() override
+  void display() const override
   {
     print_title();
 

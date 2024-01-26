@@ -26,7 +26,7 @@ public:
     return this;
   }
 
-  void display() override
+  void display() const override
   {
     print_title();
 

@@ -33,7 +33,7 @@ public:
     {
     }
 
-    void display() override
+    void display() const override
     {
         if (step == 1) {
             // Prompt for the users input

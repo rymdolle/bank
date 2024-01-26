@@ -33,39 +33,46 @@ public:
   void display() override
   {
       if (step == 1) {
+          // Grabs the input from the user and assigns it to accIndex
           accIndex = userInputInt;
-          std::cout << accIndex;
+
+          // Get the logged users account and assign it to a vector for processing
           const std::vector<Account>& accounts = user_.getAccounts();
           Account targetAcc = accounts[accIndex-1];
+          // Save the chosen accounts currency and balance
           targetCurrency = targetAcc.getCurrency();
           targetAmount = targetAcc.getBalance();
+          // Prompt for the users input
           std::cout << "  " << std::left << std::setw(30) << targetAcc.getAccountName()
                     << Currency::get(targetAcc.getCurrency()).format(targetAcc.getBalance())
                     << '\n'
                     << "  Now chose what amount and hit [Enter] for the next step\n";
-          // Add error handling
+          // Save the users input as the desired amount
           amount = userInputInt;
       } else if(step == 2) {
 
+          // Prints the currency choices in a grid
           int cols = 9;
           int size = Currency::get().size();
           int i = 1;
-
           for (auto& c : Currency::get()) {
               std::cout << std::setw(3) << ' ' << std::setw(4) << c.first;
 
               if (i % cols == 0 || i == size) {
-                  std::cout << '\n';  // Move to the next line after printing a row
+                  std::cout << '\n';
               } else {
-                  std::cout << '\t';  // Use tabs to separate columns
+                  std::cout << '\t';
               }
               i++;
           }
+          // Prompts the user for a choice
           std::cout << "\n  Now enter the desired currency from the list\n"
                     << "  Hit [Enter] to finish\n";
 
       } else if (step == 3) {
+          // Choice is saved in chosenCurrency
           chosenCurrency = userInputStr;
+          // Loops through the currency map to find the chosen currency
           int i = 0;
           for (auto& c : Currency::get()) {
               i++;
@@ -73,7 +80,7 @@ public:
                   chosenCurrency = c.first;
               }
           }
-          // Needs currency data
+
           // Add if complete amount was chosen transfer the whole account otherwise create new.
 
 
@@ -81,6 +88,7 @@ public:
                     << chosenCurrency << " " << "INSERT_END_RESULT\n";
           step = 0;
       } else {
+
           int i = 1;
           for (Account& a : user_.getAccounts()) {
               std::cout << "  " << i++ << "." << std::left << std::setw(30) << a.getAccountName()
@@ -89,8 +97,8 @@ public:
 
           }
           std::cout    << "  Select what account you would to exchange from,"
-                          " if you at any point would like to abort, clear the textbox"
-                          " ,type 0 and press [Enter] " << std::endl;
+                          " if you at any point would like to abort,\n"
+                          "  clear the textbox,type 0 and press [Enter] \n";
       }
   }
 

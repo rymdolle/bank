@@ -45,6 +45,7 @@ public:
                   << '\n';
         ++i;
       }
+      std::cout << std::right << std::setw(3) << 0 << ". Abort\n";
       break;
     }
     case step::TO_ACCOUNT: {
@@ -58,10 +59,12 @@ public:
         }
         ++i;
       }
+      std::cout << std::right << std::setw(3) << 0 << ". Abort\n";
       break;
     }
     case step::AMOUNT: {
-      std::cout << "Select an amount to transfer or 0 to abort\n";
+      std::cout << "Select an amount to transfer or 0 to abort\n"
+                << std::right << std::setw(3) << 0 << ". Abort\n";
       break;
     }
     case step::TRANSFER: {
@@ -100,6 +103,7 @@ public:
       amount = Currency::get(currency).parse(input);
       state = step::TRANSFER ;
     } else if (state == step::TRANSFER) {
+      state = step::FROM_ACCOUNT;
       return parent_;
     }
     return this;

@@ -7,7 +7,7 @@
 
 #ifdef _WIN32
 #include <conio.h>
-#elif __linux__
+#elif __linux__ || __APPLE__
 #include <termios.h>
 #include <unistd.h>
 #define _getch()  getchar()
@@ -28,7 +28,8 @@ std::string read_password()
 {
   std::string password;
 
-#ifdef __linux__
+#ifdef __linux__ || __APPLE__
+
   // On linux systems we have to unset the echo and canonical flags in
   // the terminal to not echo back what is written and to read one
   // char instead of reading until enter is pressed.
@@ -68,7 +69,8 @@ std::string read_password()
     }
   }
 
-#ifdef __linux__
+#ifdef __linux__ || __APPLE__
+
   // Restore flags to original state
   tcsetattr(STDIN_FILENO, TCSANOW, &old);
 #endif

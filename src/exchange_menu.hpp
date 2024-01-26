@@ -49,6 +49,7 @@ public:
                     << "  Now chose what amount and hit [Enter] for the next step\n";
           // Save the users input as the desired amount
       } else if(step == 2) {
+        // Save the users input as the desired amount
         amount = userInputInt;
 
           // Prints the currency choices in a grid
@@ -81,6 +82,12 @@ public:
               }
           }
 
+          const std::vector<Account>& accounts = user_.getAccounts();
+          Account targetAcc = accounts[accIndex-1];
+          double tempBalance = targetAcc.getBalance();
+          std::cout << tempBalance << "\n";
+          targetAcc.setBalance(tempBalance-amount);
+          std::cout << targetAcc.getBalance() << "\n";
           // Add if complete amount was chosen transfer the whole account otherwise create new.
 
 

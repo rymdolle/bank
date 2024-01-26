@@ -100,6 +100,10 @@ public:
       if (input.empty())
         break;
       account_src = std::stoi(input);
+      if (account_src < 1 || account_src > user_.getAccounts().size()) {
+        std::cout << "Invalid account source.\n";
+        break;
+      }
       state = step::TO_ACCOUNT;
       break;
     }
@@ -107,6 +111,12 @@ public:
       if (input.empty())
         break;
       account_dst = std::stoi(input);
+      if (account_src < 1 ||
+          account_src > user_.getAccounts().size() ||
+          account_src == account_dst) {
+        std::cout << "Invalid account destination.\n";
+        break;
+      }
       state = step::AMOUNT;
       break;
     }
@@ -119,8 +129,7 @@ public:
         src.setBalance(src.getBalance() - amount);
         dst.setBalance(dst.getBalance() + amount);
       } else {
-        std::cout << "*ERROR*\n"
-                  << "Cannot transfer funds. Invalid amount."
+        std::cout << "Cannot transfer funds. Invalid amount."
                   <<"\n\n";
         break;
       }

@@ -48,8 +48,8 @@ public:
                     << '\n'
                     << "  Now chose what amount and hit [Enter] for the next step\n";
           // Save the users input as the desired amount
-          amount = userInputInt;
       } else if(step == 2) {
+        amount = userInputInt;
 
           // Prints the currency choices in a grid
           int cols = 9;

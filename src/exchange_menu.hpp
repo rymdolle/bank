@@ -96,9 +96,9 @@ public:
                         << '\n';
 
           }
-          std::cout    << "  Select what account you would to exchange from,"
-                          " if you at any point would like to abort,\n"
-                          "  clear the textbox,type 0 and press [Enter] \n";
+          std::cout    << "  Select what account you would to exchange from,\n"
+                          "  if you at any point would like to abort,\n"
+                          "  clear the textbox,type 0 and press [Enter]\n";
       }
   }
 

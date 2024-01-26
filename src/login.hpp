@@ -5,6 +5,8 @@
 #include <vector>
 #include <filesystem>
 
+#include <unistd.h>
+
 #ifdef _WIN32
 #include <conio.h>
 #elif __linux__ || __APPLE__
@@ -28,7 +30,7 @@ std::string read_password()
 {
   std::string password;
 
-#ifdef __linux__ || __APPLE__
+#if defined (__linux__) || defined (__APPLE__)
 
   // On linux systems we have to unset the echo and canonical flags in
   // the terminal to not echo back what is written and to read one

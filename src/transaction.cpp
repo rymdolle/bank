@@ -2,11 +2,11 @@
 #include "user.hpp"
 #include "menu.hpp"
 
-void Transaction::transfer(const User& currentUser)
+void Transaction::transfer(User& currentUser)
 {
 	int i = 0, firstChoice, secondChoice;
 	double amount;
-	std::vector<Account> userAccounts = currentUser.getAccounts();
+	std::vector<Account>& userAccounts = currentUser.getAccounts();
 
 	std::cout << "From which account?\n";
 	std::cin >> firstChoice;
@@ -39,10 +39,10 @@ void Transaction::transfer(const User& currentUser)
 
 }
 
-void Transaction::withdraw(const User& currentUser)
+void Transaction::withdraw(User& currentUser)
 {
 	int choice, amount;
-	std::vector<Account> userAccounts = currentUser.getAccounts();
+	std::vector<Account>& userAccounts = currentUser.getAccounts();
 
 	std::cout << "From which account?\n";
 	std::cin >> choice;
@@ -66,10 +66,10 @@ void Transaction::withdraw(const User& currentUser)
 		 << " successful.\n";
 }
 
-void Transaction::deposit(const User& currentUser)
+void Transaction::deposit(User& currentUser)
 {
 	int choice, amount;
-	std::vector<Account> userAccounts = currentUser.getAccounts();
+	std::vector<Account>& userAccounts = currentUser.getAccounts();
 
 	std::cout << "To which account?\n";
 	std::cin >> choice;

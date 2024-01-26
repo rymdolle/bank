@@ -7,9 +7,9 @@ class User;
 class Transaction
 {
 public:
-	void transfer(const User& currentUser);
-	void withdraw(const User& currentUser);
-	void deposit(const User& currentUser);
+	void transfer(User& currentUser);
+	void withdraw(User& currentUser);
+	void deposit(User& currentUser);
 
 };
 

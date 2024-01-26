@@ -15,13 +15,18 @@ private:
     std::string name_;
     std::string password_;
     int id_;
+  std::vector<Account> accounts_;
 public:
 
-    User(std::string name, std::string password, int id) {
-        name_ = name;
-        password_ = password;
-        id_ = id;
+  User(std::string name, std::string password, int id) {
+    name_ = name;
+    password_ = password;
+    id_ = id;
+    for (Account& a : Account::getAccounts()) {
+      if (a.getUserId() == id_)
+        accounts_.push_back(a);
     }
+  }
 
   User() {}
 
@@ -64,27 +69,10 @@ public:
         return users;
   }
 
-  std::vector<Account> getAccounts() const
+  std::vector<Account>& getAccounts()
   {
-    std::vector<Account> accounts;
-    for (Account& a : Account::getAccounts()) {
-      if (a.getUserId() == id_)
-        accounts.push_back(a);
-    }
-    return accounts;
+    return accounts_;
   }
-
-  /*
-  std::vector<Account> getAccounts()
-  {
-    std::vector<Account> accounts;
-    for (Account& a : Account::getAccounts()) {
-      if (a.getId() == id_)
-        accounts.push_back(a);
-    }
-    return accounts;
-  }
-   */
 };
 
 

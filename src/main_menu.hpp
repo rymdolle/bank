@@ -15,17 +15,54 @@
 class MainMenu : public Menu
 {
 private:
+  std::vector<Menu*> options_;
 public:
   MainMenu(User& user) :
     Menu("Bank")
   {
     addSubmenu(new AccountMenu(user));
-    addSubmenu(new TransferMenu());
-    addSubmenu(new ExchangeMenu());
+    addSubmenu(new TransferMenu(user));
+    addSubmenu(new ExchangeMenu(user));
   }
 
-  void display(int menu) override
+  Menu* enter(std::string input) override
   {
+    int choice = 0;
+    if (!input.empty() && std::isdigit(input[0])) {
+      choice = std::stoi(input);
+    } else {
+      std::cout << "Invalid input\n";
+      return this;
+    }
+    if (choice == 0) // Back or exit
+      return parent_;
+
+    if (choice > options_.size()) {
+      std::cout << "Invalid input\n";
+      // return current menu
+      return this;
+    }
+
+    return options_[choice - 1];
+  }
+
+  void display() override
+  {
+    print_title();
+
+    // Print numbered menu options
+    for (size_t i = 0; i < options_.size(); ++i) {
+      std::cout << std::right << std::setw(3) << i+1 << ". "
+                << options_[i]->title << '\n';
+    }
+
+    std::cout << std::right << std::setw(3) << 0 << ". Logout" << std::endl;
+  }
+
+  void addSubmenu(Menu *sub)
+  {
+    sub->setParent(this);
+    options_.push_back(sub);
   }
 };
 

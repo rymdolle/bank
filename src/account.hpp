@@ -6,12 +6,13 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 
 #include "transaction.hpp"
 
 class Account
-{
+        {
 private:
 	std::string accountName_;
 	double balance_;
@@ -25,7 +26,7 @@ public:
 		balance_ = balance;
 		id_ = id;
 		userId_ = userId;
-	        currency_ = "SEK";
+          currency_ = "SEK";
 
 	}
 	std::string getAccountName() const {

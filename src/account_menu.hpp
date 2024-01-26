@@ -19,26 +19,30 @@ public:
   {
   }
 
-  size_t size() override
+  Menu* enter(std::string input) override
   {
-    return 0;
-  }
-
-  Menu* enter(int menu) override
-  {
+    if (input.empty())
+      return parent_;
     return this;
   }
 
-  void display(int menu) override
+  void display() override
   {
+    print_title();
+
     // Print numbered menu options
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"
               << "Balance:\n";
+    int total = 0;
     for (Account& a : user_.getAccounts()) {
       std::cout << "  " << std::left << std::setw(30) << a.getAccountName()
                 << Currency::get(a.getCurrency()).format(a.getBalance())
                 << '\n';
+      total += a.getBalance();
     }
+
+    std::cout << '\n'
+              << "Press [Enter] to go back\n";
   }
 };
 

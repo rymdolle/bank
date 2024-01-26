@@ -6,9 +6,9 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include <Windows.h>
 
 #include "menu.hpp"
+#include "user.hpp"
 #include "currency.hpp"
 
 class ExchangeMenu : public Menu
@@ -36,23 +36,12 @@ public:
     void display() override
     {
         if (step == 1) {
-            // Grabs the input from the user and assigns it to accIndex
-            accIndex = userInputInt;
-            targetAcc = &getTarAcc();
-
-            // Save the chosen accounts currency and balance
-            targetCurrency = targetAcc->getCurrency();
-            targetAmount = targetAcc->getBalance();
-
             // Prompt for the users input
             std::cout << "  " << std::left << std::setw(30) << targetAcc->getAccountName()
                       << Currency::get(targetAcc->getCurrency()).format(targetAcc->getBalance())
                       << "\n\n  Now chose what amount and hit [Enter] for the next step\n";
 
         } else if(step == 2) {
-            // Save the users input as the desired amount
-            amount = userInputInt*100;
-
             // Prints the currency choices in a grid
             int cols = 9;
             int size = Currency::get().size();
@@ -72,26 +61,8 @@ public:
                       << "  Hit [Enter] to finish\n";
 
         } else if (step == 3) {
-            // Choice is saved in chosenCurrency
-            chosenCurrency = userInputStr;
-
-            // Simulate the key press [Enter] to process the data in the final step
-            INPUT input;
-            input.type = INPUT_KEYBOARD;
-            input.ki.wVk = VK_RETURN;
-            input.ki.dwFlags = 0;
-
-            SendInput(1, &input, sizeof(INPUT));
-
-            Sleep(50);
-
-            input.ki.dwFlags = KEYEVENTF_KEYUP;  // Key release
-
-            SendInput(1, &input, sizeof(INPUT));
-
-        } else if (step == 4) {
-            std::cout << "  The selected amount " << targetCurrency << " " << amount/100 << " will be exchanged to "
-                      << chosenCurrency << " " << exchangeAmount << "\n  and stored in a new account."
+            std::cout << "  The selected amount " << Currency::get(targetAcc->getCurrency()).format(amount) << " will be exchanged to "
+                      << Currency::get(chosenCurrency).format(exchangeAmount) << "\n  and stored in a new account."
                       << "\n\n  Hit [Enter] to return.";
 
         } else {
@@ -117,12 +88,28 @@ public:
             std::transform(input.begin(), input.end(), input.begin(), ::toupper);
             userInputStr = input;
         }
+
+        if (step == 0) {
+            // Grabs the input from the user and assigns it to accIndex
+            accIndex = userInputInt;
+            targetAcc = &getTarAcc();
+
+            // Save the chosen accounts currency and balance
+            targetCurrency = targetAcc->getCurrency();
+            targetAmount = targetAcc->getBalance();
+
+        }
+
         // Calls parse function for currency management
         Currency tempCurr = Currency::get(targetCurrency);
-        if (tempCurr.parse(input) > targetAmount && step == 1) {
-            std::cout << "\n  Amount exceeds your balance, please try again.\n\n";
-            step = 0;
-            return this;
+        if (step == 1) {
+            if (tempCurr.parse(input) > targetAmount) {
+                std::cout << "\n  Amount exceeds your balance, please try again.\n\n";
+                step = 0;
+                return this;
+            }
+            // Save the users input as the desired amount
+            amount = tempCurr.parse(input);
         }
 
         if (userInputInt == 0) {
@@ -134,6 +121,10 @@ public:
         if (step == 2) {
             tempBalance = targetAcc->getBalance();
             targetAcc->setBalance(tempBalance-amount);
+            chosenCurrency = userInputStr;
+            tempCurr = Currency::get(targetAcc->getCurrency());
+            std::cout << "amount: " << amount << '\n';
+            exchangeAmount = tempCurr.exchangeMonies(chosenCurrency, amount);
         }
 
         if (step == 3) {
@@ -145,14 +136,9 @@ public:
                     chosenCurrency = c.first;
                 }
             }
-            tempCurr = Currency::get(targetAcc->getCurrency());
-            exchangeAmount = tempCurr.exchangeMonies(chosenCurrency, amount/100);
-            Account newAccount{"Currency Account(" + chosenCurrency +")", exchangeAmount*100, targetAcc->getUserId(), Account::nextAccID()};
+            Account newAccount{"Currency Account(" + chosenCurrency +")", exchangeAmount, targetAcc->getUserId(), Account::nextAccID()};
             newAccount.setCurrency(chosenCurrency);
             user_.createAccount(newAccount);
-        }
-
-        if(step == 4) {
             step = 0;
             return this;
         }

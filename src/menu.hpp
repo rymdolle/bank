@@ -37,9 +37,6 @@ public:
 
   // Virtual function that has to be implemented
   virtual Menu* enter(std::string input) = 0;
-
-  virtual size_t size() = 0;
-
   virtual void display() = 0;
 
   void setParent(Menu* parent)

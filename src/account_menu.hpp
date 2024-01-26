@@ -19,11 +19,6 @@ public:
   {
   }
 
-  size_t size() override
-  {
-    return 0;
-  }
-
   Menu* enter(std::string input) override
   {
     if (input.empty())
@@ -38,15 +33,16 @@ public:
     // Print numbered menu options
     std::cout << "  " <<  std::left << std::setw(30) << "Type:"
               << "Balance:\n";
+    int total = 0;
     for (Account& a : user_.getAccounts()) {
       std::cout << "  " << std::left << std::setw(30) << a.getAccountName()
                 << Currency::get(a.getCurrency()).format(a.getBalance())
                 << '\n';
+      total += a.getBalance();
     }
 
     std::cout << '\n'
               << "Press [Enter] to go back\n";
-    //std::cout << std::right << std::setw(3) << 0 << ". Back\n";
   }
 };
 

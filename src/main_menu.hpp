@@ -27,7 +27,6 @@ public:
 
   Menu* enter(std::string input) override
   {
-    std::cout << "User input: " << input << '\n';
     int choice = 0;
     if (!input.empty() && std::isdigit(input[0])) {
       choice = std::stoi(input);
@@ -38,18 +37,13 @@ public:
     if (choice == 0) // Back or exit
       return parent_;
 
-    if (choice > size()) {
+    if (choice > options_.size()) {
       std::cout << "Invalid input\n";
       // return current menu
       return this;
     }
 
     return options_[choice - 1];
-  }
-
-  size_t size() override
-  {
-    return options_.size();
   }
 
   void display() override

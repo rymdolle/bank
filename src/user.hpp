@@ -15,7 +15,7 @@ private:
     std::string name_;
     std::string password_;
     int id_;
-  std::vector<Account> accounts_;
+    std::vector<Account> accounts_;
 public:
 
   User(std::string name, std::string password, int id) {
@@ -73,6 +73,13 @@ public:
   {
     return accounts_;
   }
+
+  void createAccount(Account newAccount)
+  {
+    std::cout << "New account has been created\n";
+    accounts_.push_back(newAccount);
+  }
+
 };
 
 

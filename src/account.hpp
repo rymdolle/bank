@@ -52,7 +52,13 @@ public:
 		balance_ = newBalance;
 	}
 
-
+    static int nextAccID() {
+      int nextId = 0;
+      for(auto& a : getAccounts()) {
+        nextId = std::max(nextId,a.getId());
+      }
+      return nextId+1;
+    }
 
     double& getBalance() {
         return balance_;
@@ -217,8 +223,6 @@ public:
 
 		return true;
 	}
-
-
 
     static std::vector<Account>& getAccounts()
     {

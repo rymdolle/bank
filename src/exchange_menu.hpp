@@ -82,11 +82,17 @@ public:
 
     Menu* enter(std::string input) override
     {
+
         if (!input.empty() && isdigit(input[0])){
             userInputInt = std::stoi(input);
         } else {
             std::transform(input.begin(), input.end(), input.begin(), ::toupper);
             userInputStr = input;
+        }
+        if (userInputInt == 0) {
+            std::cout << "\nThe operation has been cancelled, try again.\n";
+            step = 0;
+            return parent_;
         }
 
         if (step == 0) {
@@ -112,12 +118,6 @@ public:
             amount = tempCurr.parse(input);
         }
 
-        if (userInputInt == 0) {
-            std::cout << "\nThe operation has been cancelled, try again.\n";
-            step = 0;
-            return parent_;
-        }
-
         if (step == 2) {
             tempBalance = targetAcc->getBalance();
             targetAcc->setBalance(tempBalance-amount);
@@ -139,8 +139,6 @@ public:
             Account newAccount{"Currency Account(" + chosenCurrency +")", exchangeAmount, targetAcc->getUserId(), Account::nextAccID()};
             newAccount.setCurrency(chosenCurrency);
             user_.createAccount(newAccount);
-            step = 0;
-            return this;
         }
 
         step++;

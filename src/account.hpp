@@ -27,7 +27,7 @@ public:
 		balance_ = balance;
 		id_ = id;
 		userId_ = userId;
-          currency_ = "SEK";
+        currency_ = "SEK";
 
 	}
 	std::string getAccountName() const {
@@ -264,6 +264,9 @@ public:
     }
     return accounts;
   }
+
+    void setCurrency(const std::string &currency);
+
 };
 
 #endif //ACCOUNT_MENU_HPP

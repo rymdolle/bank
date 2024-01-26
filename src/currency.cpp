@@ -6,7 +6,8 @@
 
 #include "currency.hpp"
 
-std::map<std::string, Currency> Currency::currencies_{};
+std::map<std::string, Currency> Currency::currencies_ =
+  Currency::loadFromFile("data/currency.tsv");
 
 Currency::Currency()
 {
@@ -18,17 +19,20 @@ Currency::Currency()
 
 Currency::Currency(std::string line)
 {
-  std::stringstream csv(line);
+  std::stringstream ss(line);
   std::string value;
-  std::getline(csv, entity_, '\t');
-  std::getline(csv, currency_, '\t');
-  std::getline(csv, acode_, '\t');
+  std::getline(ss, entity_, '\t');
+  std::getline(ss, currency_, '\t');
+  std::getline(ss, acode_, '\t');
 
-  std::getline(csv, value, '\t');
-  ncode_ = std::stoi(value);
+  ss >> ncode_;
+  ss >> minor_;
 
-  std::getline(csv, value, '\t');
-  minor_ = std::stoi(value);
+  //std::getline(csv, value, '\t');
+  //ncode_ = std::stoi(value);
+
+  //std::getline(csv, value, '\t');
+  //minor_ = std::stoi(value);
 }
 
 std::map<std::string, Currency>&  Currency::get()
@@ -58,9 +62,14 @@ std::string Currency::format(int64_t amount)
   return ss.str();
 }
 
-void Currency::loadFromFile(std::string filename)
+std::map<std::string, Currency> Currency::loadFromFile(std::string filename)
 {
   std::ifstream file(filename);
+  if (!file.is_open()) {
+    std::cerr << "Error opening file: " << filename << std::endl;
+    exit(1);
+  }
+  std::map<std::string, Currency> currencies;
   std::string line;
   std::getline(file, line);
   while (std::getline(file, line)) {
@@ -68,8 +77,9 @@ void Currency::loadFromFile(std::string filename)
     if (c.acode_ == "SEK") {
       c.loadExchangeRates("data/exchange.tsv");
     }
-    currencies_[c.acode_] = c;
+    currencies[c.acode_] = c;
   }
+  return currencies;
 }
 
 void Currency::loadExchangeRates(std::string filename)
@@ -77,7 +87,7 @@ void Currency::loadExchangeRates(std::string filename)
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
-        return;
+        exit(1);
     }
     std::string line;
     std::getline(file, line);

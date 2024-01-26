@@ -29,8 +29,9 @@ public:
   int parse(std::string text);
   static std::map<std::string, Currency>& get();
   static Currency& get(std::string acode);
-  static void loadFromFile(std::string filename);
+  static std::map<std::string, Currency> loadFromFile(std::string filename);
   void loadExchangeRates(std::string filename);
+  std::map<std::string, double>& getExchangeRates() { return exchangeRates; }
 
   double exchangeMonies(std::string acode, double amount) {
     return amount/exchangeRates[acode];

@@ -117,6 +117,14 @@ public:
         std::cout << "Invalid account destination.\n";
         break;
       }
+      Account& src = user_.getAccounts()[account_src - 1];
+      Account& dst = user_.getAccounts()[account_dst - 1];
+      std::cout << src.getCurrency() << '\n';
+      std::cout << dst.getCurrency() << '\n';
+      if (src.getCurrency() != dst.getCurrency()) {
+        std::cout << "Source and destination currencies does not match.\n";
+        break;
+      }
       state = step::AMOUNT;
       break;
     }

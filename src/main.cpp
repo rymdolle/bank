@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
   // Load accounts
   Account::loadFromFile("data/accounts.tsv");
 
-    User currentUser;
+  User currentUser;
 
   std::cout << "Welcome to BANK!\n";
   while (login(currentUser)) {

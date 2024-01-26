@@ -64,7 +64,35 @@ void Currency::loadFromFile(std::string filename)
   std::getline(file, line);
   while (std::getline(file, line)) {
     Currency c(line);
+    if (c.acode_ == "SEK") {
+      c.loadExchangeRates("data/exchange.tsv");
+      std::cout << c.acode_ << std::endl;
+    }
     currencies_[c.acode_] = c;
+  }
+}
+
+void Currency::loadExchangeRates(std::string filename)
+{
+  std::ifstream file(filename);
+  std::string line;
+  std::getline(file, line);
+  std::cout << "this is a line: " << file.is_open() << "\n";
+  while (std::getline(file, line)) {
+    std::stringstream tsv(line);
+    std::string value;
+    double xRate;
+    std::string targetCurr;
+
+    std::getline(tsv, value, '\t');
+    std::getline(tsv, targetCurr, '\t');
+    std::getline(tsv, value, '\t');
+    xRate = std::stod(value);
+
+    exchangeRates[targetCurr] = xRate;
+  }
+  for(auto [key,value] : exchangeRates) {
+    std::cout << key << std::endl;
   }
 }
 

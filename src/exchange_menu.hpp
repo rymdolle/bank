@@ -22,6 +22,8 @@ std::string userInputStr;
 int userInputInt;
 std::string targetCurrency;
 double targetAmount = 0;
+Account *targetAcc;
+double tempBalance = 0, exchangeAmount = 0;
 
 public:
 
@@ -35,19 +37,17 @@ public:
       if (step == 1) {
           // Grabs the input from the user and assigns it to accIndex
           accIndex = userInputInt;
+          targetAcc = &getTarAcc();
 
-          // Get the logged users account and assign it to a vector for processing
-          std::vector<Account>& accounts = user_.getAccounts();
-          Account targetAcc = accounts[accIndex-1];
           // Save the chosen accounts currency and balance
-          targetCurrency = targetAcc.getCurrency();
-          targetAmount = targetAcc.getBalance();
+          targetCurrency = targetAcc->getCurrency();
+          targetAmount = targetAcc->getBalance();
           // Prompt for the users input
-          std::cout << "  " << std::left << std::setw(30) << targetAcc.getAccountName()
-                    << Currency::get(targetAcc.getCurrency()).format(targetAcc.getBalance())
+          std::cout << "  " << std::left << std::setw(30) << targetAcc->getAccountName()
+                    << Currency::get(targetAcc->getCurrency()).format(targetAcc->getBalance())
                     << '\n'
                     << "  Now chose what amount and hit [Enter] for the next step\n";
-          // Save the users input as the desired amount
+
       } else if(step == 2) {
         // Save the users input as the desired amount
         amount = userInputInt;
@@ -73,7 +73,7 @@ public:
       } else if (step == 3) {
           // Choice is saved in chosenCurrency
           chosenCurrency = userInputStr;
-          // Loops through the currency map to find the chosen currency
+          // Loops through the currency vector to find the chosen currency
           int i = 0;
           for (auto& c : Currency::get()) {
               i++;
@@ -82,18 +82,9 @@ public:
               }
           }
 
-          const std::vector<Account>& accounts = user_.getAccounts();
-          Account targetAcc = accounts[accIndex-1];
-          double tempBalance = targetAcc.getBalance();
-          std::cout << tempBalance << "\n";
-          targetAcc.setBalance(tempBalance-amount);
-          std::cout << targetAcc.getBalance() << "\n";
-          // Add if complete amount was chosen transfer the whole account otherwise create new.
-
 
           std::cout << "  The chosen amount of " << targetCurrency << " " << amount << " will be exchanged to "
-                    << chosenCurrency << " " << "INSERT_END_RESULT\n";
-          step = 0;
+                    << chosenCurrency << " " << exchangeAmount << "\n";
       } else {
 
           int i = 1;
@@ -119,20 +110,46 @@ public:
       }
       std::cout << "\nThis is the target amount " << targetAmount;
       std::cout << "\nThis is step: " << step << "\n";
-      // TODO: Replace with currey parse function
-      if (userInputInt*100 > targetAmount && step == 1) {
-          std::cout << "Amount exceeds your balance, please try again.\n";
-          step = 1;
+      // Calls parse function for currency management
+      Currency tempCurr = Currency::get(targetCurrency);
+      if (tempCurr.parse(input) > targetAmount && step == 1) {
+          std::cout << "\n  Amount exceeds your balance, please try again.\n\n";
+          step = 0;
           return this;
       }
 
-      if (userInputInt == 0) {
-          std::cout << "\nThe operation has been aborted, try again.\n";
-          return parent_;
-      }
-      step++;
+
+    if (userInputInt == 0) {
+      std::cout << "\nThe operation has been aborted, try again.\n";
+      step = 0;
+      return parent_;
+    }
+
+    if (step == 2) {
+      tempBalance = targetAcc->getBalance();
+      std::cout << tempBalance << "\n";
+      targetAcc->setBalance(tempBalance-amount);
+      std::cout << targetAcc->getBalance() << "\n";
+    }
+
+    if(step == 3) {
+      tempCurr = Currency::get(targetAcc->getCurrency());
+      exchangeAmount = tempCurr.exchangeMonies(chosenCurrency, amount);
+      std::cout << "\nThis is the exchange amount " <<exchangeAmount << "\n";
+      Account newAccount{"Exchange " + chosenCurrency, exchangeAmount, targetAcc->getUserId(), Account::nextAccID()};
+      user_.createAccount(newAccount);
+      step = 0;
+      return this;
+    }
+    step++;
     return this;
   }
+
+  Account& getTarAcc() {
+    std::vector<Account> &accounts = user_.getAccounts();
+    Account &targetAcc = accounts[accIndex-1];
+    return targetAcc;
+    }
 };
 
 #endif /* BANK_EXCHANGE_MENU_HPP */

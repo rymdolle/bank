@@ -13,8 +13,8 @@ class TransferMenu : public Menu
 {
 private:
   User& user_;
-  int account_from;
-  int account_to;
+  int account_src;
+  int account_dst;
   int amount;
 
   enum class step {
@@ -41,7 +41,8 @@ public:
       int i = 1;
       for (Account& a : user_.getAccounts()) {
         std::cout << std::right << std::setw(3) << i << ". "
-                  << a.getAccountName()
+                  << std::left << std::setw(30) << a.getAccountName()
+                  << Currency::get(a.getCurrency()).format(a.getBalance())
                   << '\n';
         ++i;
       }
@@ -52,9 +53,10 @@ public:
       std::cout << "Select an account to transfer to or 0 to abort\n";
       int i = 1;
       for (Account& a : user_.getAccounts()) {
-        if (i != account_from) {
+        if (i != account_src) {
           std::cout << std::right << std::setw(3) << i << ". "
-                    << a.getAccountName()
+                    << std::left << std::setw(30) << a.getAccountName()
+                    << Currency::get(a.getCurrency()).format(a.getBalance())
                     << '\n';
         }
         ++i;
@@ -68,17 +70,18 @@ public:
       break;
     }
     case step::TRANSFER: {
-      auto currency = user_.getAccounts()[account_from].getCurrency();
+      auto currency = user_.getAccounts()[account_src].getCurrency();
       std::cout << "Transfered " << Currency::get(currency).format(amount)
                 << " from " << '\''
-                << user_.getAccounts()[account_from].getAccountName()
+                << user_.getAccounts()[account_src - 1].getAccountName()
                 << '\''
                 << " to " << '\''
-                << user_.getAccounts()[account_to].getAccountName()
+                << user_.getAccounts()[account_dst - 1].getAccountName()
                 << '\''
                 << '\n';
       std::cout << '\n'
                 << "Press [Enter] to go back\n";
+      break;
     }
     default:
       break;
@@ -92,19 +95,44 @@ public:
       return parent_;
     }
 
-    if (state == step::FROM_ACCOUNT) {
-      account_from = std::stoi(input);
-      state = step::TO_ACCOUNT ;
-    } else if (state == step::TO_ACCOUNT) {
-      account_to = std::stoi(input);
-      state = step::AMOUNT ;
-    } else if (state == step::AMOUNT) {
-      auto currency = user_.getAccounts()[account_from].getCurrency();
+    switch (state) {
+    case step::FROM_ACCOUNT: {
+      if (input.empty())
+        break;
+      account_src = std::stoi(input);
+      state = step::TO_ACCOUNT;
+      break;
+    }
+    case step::TO_ACCOUNT: {
+      if (input.empty())
+        break;
+      account_dst = std::stoi(input);
+      state = step::AMOUNT;
+      break;
+    }
+    case step::AMOUNT: {
+      Account& src = user_.getAccounts()[account_src - 1];
+      Account& dst = user_.getAccounts()[account_dst - 1];
+      std::string currency = src.getCurrency();
       amount = Currency::get(currency).parse(input);
-      state = step::TRANSFER ;
-    } else if (state == step::TRANSFER) {
+      if (amount > 0 && amount <= src.getBalance()) {
+        src.setBalance(src.getBalance() - amount);
+        dst.setBalance(dst.getBalance() + amount);
+      } else {
+        std::cout << "*ERROR*\n"
+                  << "Cannot transfer funds. Invalid amount."
+                  <<"\n\n";
+        break;
+      }
+      state = step::TRANSFER;
+      break;
+    }
+    case step::TRANSFER: {
       state = step::FROM_ACCOUNT;
       return parent_;
+    }
+    default:
+      break;
     }
     return this;
   }

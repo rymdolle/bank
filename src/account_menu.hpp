@@ -21,9 +21,7 @@ public:
 
   Menu* enter(std::string input) override
   {
-    if (input.empty())
-      return parent_;
-    return this;
+    return parent_;
   }
 
   void display() const override

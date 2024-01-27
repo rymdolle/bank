@@ -44,10 +44,10 @@ public:
         } else if(step == 2) {
             // Prints the currency choices in a grid
             int cols = 9;
-            int size = Currency::get().size();
+            int size = Currency::get("SEK").getExchangeRates().size();
             int i = 1;
-            for (auto& c : Currency::get()) {
-                std::cout << std::setw(3) << ' ' << std::setw(4) << c.first;
+            for (auto& [code,xrate] : Currency::get("SEK").getExchangeRates()) {
+                std::cout << std::setw(3) << ' ' << std::setw(4) << code;
 
                 if (i % cols == 0 || i == size) {
                     std::cout << '\n';
@@ -107,8 +107,8 @@ public:
         }
 
         // Calls parse function for currency management
-        Currency tempCurr = Currency::get(targetCurrency);
         if (step == 1) {
+            Currency tempCurr = Currency::get(targetCurrency);
             if (tempCurr.parse(input) > targetAmount) {
                 std::cout << "\n  Amount exceeds your balance, please try again.\n\n";
                 step = 0;
@@ -122,7 +122,7 @@ public:
             tempBalance = targetAcc->getBalance();
             targetAcc->setBalance(tempBalance-amount);
             chosenCurrency = userInputStr;
-            tempCurr = Currency::get(targetAcc->getCurrency());
+            Currency tempCurr = Currency::get(targetAcc->getCurrency());
             std::cout << "amount: " << amount << '\n';
             exchangeAmount = tempCurr.exchangeMonies(chosenCurrency, amount);
         }

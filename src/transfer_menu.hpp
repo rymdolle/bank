@@ -70,7 +70,7 @@ public:
       break;
     }
     case step::TRANSFER: {
-      auto currency = user_.getAccounts()[account_src].getCurrency();
+      std::string currency = user_.getAccounts()[account_src - 1].getCurrency();
       std::cout << "Transfered " << Currency::get(currency).format(amount)
                 << " from " << '\''
                 << user_.getAccounts()[account_src - 1].getAccountName()
@@ -115,8 +115,6 @@ public:
       }
       Account& src = user_.getAccounts()[account_src - 1];
       Account& dst = user_.getAccounts()[account_dst - 1];
-      std::cout << src.getCurrency() << '\n';
-      std::cout << dst.getCurrency() << '\n';
       if (src.getCurrency() != dst.getCurrency()) {
         std::cout << "Source and destination currencies does not match.\n";
         break;

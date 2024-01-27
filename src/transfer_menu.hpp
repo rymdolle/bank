@@ -97,9 +97,7 @@ public:
 
     switch (state) {
     case step::FROM_ACCOUNT: {
-      if (input.empty())
-        break;
-      account_src = std::stoi(input);
+      account_src = std::atoi(input.c_str());
       if (account_src < 1 || account_src > user_.getAccounts().size()) {
         std::cout << "Invalid account source.\n";
         break;
@@ -108,12 +106,10 @@ public:
       break;
     }
     case step::TO_ACCOUNT: {
-      if (input.empty())
-        break;
-      account_dst = std::stoi(input);
-      if (account_src < 1 ||
-          account_src > user_.getAccounts().size() ||
-          account_src == account_dst) {
+      account_dst = std::atoi(input.c_str());
+      if (account_dst < 1 ||
+          account_dst > user_.getAccounts().size() ||
+          account_dst == account_src) {
         std::cout << "Invalid account destination.\n";
         break;
       }

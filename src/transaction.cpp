@@ -1,7 +1,8 @@
+//transaction.hpp
 #include "transaction.hpp"
 #include "user.hpp"
 #include "menu.hpp"
-
+//transfer between accounts
 void Transaction::transfer(User& currentUser)
 {
 	int i = 0, firstChoice, secondChoice;
@@ -38,7 +39,7 @@ void Transaction::transfer(User& currentUser)
 
 
 }
-
+//transaction failure
 void Transaction::withdraw(User& currentUser)
 {
 	int choice, amount;
@@ -65,7 +66,7 @@ void Transaction::withdraw(User& currentUser)
 		std::cout << "Withdraw of " << amount << " from " << userAccounts[choice].getAccountName()
 		 << " successful.\n";
 }
-
+//transaction on the deposit account
 void Transaction::deposit(User& currentUser)
 {
 	int choice, amount;

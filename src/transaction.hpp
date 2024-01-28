@@ -1,3 +1,4 @@
+//transaction.hpp
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 #include <vector>
@@ -7,9 +8,9 @@ class User;
 class Transaction
 {
 public:
-	void transfer(User& currentUser);
-	void withdraw(User& currentUser);
-	void deposit(User& currentUser);
+	void transfer(User& currentUser);//transaction
+	void withdraw(User& currentUser);// fail
+	void deposit(User& currentUser);//transaction on the deposit's account
 
 };
 

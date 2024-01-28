@@ -1,3 +1,5 @@
+//main_menu.hpp
+//displaying all menu items on the screen
 #ifndef BANK_MAIN_MENU_HPP
 #define BANK_MAIN_MENU_HPP
 
@@ -20,9 +22,9 @@ public:
   MainMenu(User& user) :
     Menu("Bank")
   {
-    addSubmenu(new AccountMenu(user));
-    addSubmenu(new TransferMenu(user));
-    addSubmenu(new ExchangeMenu(user));
+    addSubmenu(new AccountMenu(user)); //1.Accounts
+    addSubmenu(new TransferMenu(user));//2.Transfer
+    addSubmenu(new ExchangeMenu(user));//3.Exchange
   }
 
   Menu* enter(std::string input) override
@@ -45,7 +47,7 @@ public:
 
     return options_[choice - 1];
   }
-
+  //displaying all punts menu
   void display() override
   {
     print_title();

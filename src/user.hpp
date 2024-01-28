@@ -1,3 +1,4 @@
+//user.hpp
 #ifndef USER_H
 #define USER_H
 
@@ -51,7 +52,7 @@ public:
     int getId() const {
         return id_;
     }
-
+    //load from file users
     static std::vector<User> loadFromFile(std::string filename)
     {
         std::ifstream file(filename);

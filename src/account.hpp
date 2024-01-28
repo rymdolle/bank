@@ -1,3 +1,4 @@
+//account.hpp
 #ifndef ACCOUNT_MENU_HPP
 #define ACCOUNT_MENU_HPP
 
@@ -11,7 +12,7 @@
 
 
 #include "transaction.hpp"
-
+//displaying account data on the user's screen
 class Account
         {
 private:
@@ -57,6 +58,8 @@ public:
     double& getBalance() {
         return balance_;
     }
+
+	//moving money between user accounts
 	static bool transferingMoney(int firstAccount, int secondAccount, int amount, int userId)
 	{
 		std::ifstream file("data/accounts.txt");
@@ -132,6 +135,8 @@ public:
 
 		return true;
 	}
+
+	//deposit account
 	static bool handleMoney(int accountId, int amount, int userId, bool withdraw)
 	{
 		std::ifstream file("data/accounts.txt");
@@ -219,12 +224,12 @@ public:
 	}
 
 
-
+	//load from account.tsv data file
     static std::vector<Account>& getAccounts()
     {
       return accounts_;
     }
-
+//write to file 
   static void writeToFile(std::string filename, std::vector<Account> accounts)
   {
     std::ofstream file(filename);
@@ -238,7 +243,7 @@ public:
            << account.getCurrency()    << '\n';
     }
   }
-
+  //load from account.tsv data file
   static std::vector<Account> loadFromFile(std::string filename)
   {
     std::vector<Account> accounts;

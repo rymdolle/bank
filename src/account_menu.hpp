@@ -1,3 +1,4 @@
+//account_menu.hpp
 #ifndef BANK_ACCOUNT_MENU_HPP
 #define BANK_ACCOUNT_MENU_HPP
 
@@ -25,7 +26,7 @@ public:
       return parent_;
     return this;
   }
-
+  //displaying account information on the screen - menu
   void display() override
   {
     print_title();

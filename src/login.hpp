@@ -5,7 +5,7 @@
 #include <vector>
 #include <filesystem>
 
-#include <unistd.h>
+//#include <unistd.h> 
 
 #ifdef _WIN32
 #include <conio.h>
@@ -18,14 +18,14 @@
 
 #include "user.hpp"
 #include "account.hpp"
-
+//login entry
 std::string read_username()
 {
   std::string text;
   std::getline(std::cin, text);
   return text;
 }
-
+// password entry
 std::string read_password()
 {
   std::string password;
@@ -79,7 +79,7 @@ std::string read_password()
 
   return password;
 }
-
+//checking the correctness of the user's login and password in the database
 bool login(User &currentUser)
 {
   int count = 0;
@@ -91,6 +91,7 @@ bool login(User &currentUser)
 
     for (User &user : User::loadFromFile("data/users.txt")) {
       if (user.verify(username, password)) {
+          //greeting the user to his account
         std::cout << "\nLogin successful.\n"
                   << "Welcome " << username << "!\n\n";
         currentUser = user;
@@ -99,6 +100,7 @@ bool login(User &currentUser)
     }
 
     ++count;
+    //display on the screenabout incorrect login or password
     std::cout << "\nUsername or pin code is incorrect (" << count << "/3).\n";
   } while (count < 3);
   return false;

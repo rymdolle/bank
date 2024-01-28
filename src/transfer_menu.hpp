@@ -1,3 +1,4 @@
+//transfer_menu.hpp
 #ifndef BANK_TRANSFER_MENU_HPP
 #define BANK_TRANSFER_MENU_HPP
 
@@ -30,13 +31,13 @@ public:
   {
     state = step::FROM_ACCOUNT;
   }
-
+  //transaction menu
   void display() override
   {
     print_title();
 
     switch (state) {
-    case step::FROM_ACCOUNT: {
+    case step::FROM_ACCOUNT: {//from account
       std::cout << "Select an account to transfer from or 0 to abort\n";
       int i = 1;
       for (Account& a : user_.getAccounts()) {
@@ -47,7 +48,7 @@ public:
       }
       break;
     }
-    case step::TO_ACCOUNT: {
+    case step::TO_ACCOUNT: {//to account
       std::cout << "Select an account to transfer to or 0 to abort\n";
       int i = 1;
       for (Account& a : user_.getAccounts()) {
@@ -60,11 +61,11 @@ public:
       }
       break;
     }
-    case step::AMOUNT: {
+    case step::AMOUNT: {// amount
       std::cout << "Select an amount to transfer or 0 to abort\n";
       break;
     }
-    case step::TRANSFER: {
+    case step::TRANSFER: {//transaction
       auto currency = user_.getAccounts()[account_from].getCurrency();
       std::cout << "Transfered " << Currency::get(currency).format(amount)
                 << " from " << '\''

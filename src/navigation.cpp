@@ -1,3 +1,4 @@
+//navigation.hpp
 #include "navigation.hpp"
 #include <iostream>
 #include <string>
@@ -6,7 +7,7 @@ Navigation::Navigation(User& user)  :
     main_menu(user)
 {
 }
-
+//navigation between punts menu
 void Navigation::run()
 {
   Menu *current = &main_menu;

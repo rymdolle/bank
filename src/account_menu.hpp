@@ -22,12 +22,10 @@ public:
 
   Menu* enter(std::string input) override
   {
-    if (input.empty())
-      return parent_;
-    return this;
+    return parent_;
   }
   //displaying account information on the screen - menu
-  void display() override
+  void display() const override
   {
     print_title();
 

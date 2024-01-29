@@ -48,7 +48,7 @@ public:
     return options_[choice - 1];
   }
   //displaying all punts menu
-  void display() override
+  void display() const override
   {
     print_title();
 

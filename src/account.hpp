@@ -28,7 +28,7 @@ public:
 		balance_ = balance;
 		id_ = id;
 		userId_ = userId;
-          currency_ = "SEK";
+        currency_ = "SEK";
 
 	}
 	std::string getAccountName() const {
@@ -53,7 +53,13 @@ public:
 		balance_ = newBalance;
 	}
 
-
+    static int nextAccID() {
+      int nextId = 0;
+      for(auto& a : getAccounts()) {
+        nextId = std::max(nextId,a.getId());
+      }
+      return nextId+1;
+    }
 
     double& getBalance() {
         return balance_;
@@ -223,7 +229,6 @@ public:
 		return true;
 	}
 
-
 	//load from account.tsv data file
     static std::vector<Account>& getAccounts()
     {
@@ -246,8 +251,12 @@ public:
   //load from account.tsv data file
   static std::vector<Account> loadFromFile(std::string filename)
   {
-    std::vector<Account> accounts;
     std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        exit(1);
+    }
+    std::vector<Account> accounts;
     std::string line;
     std::getline(file, line); // Skip first line
     while (std::getline(file, line)) {
@@ -265,6 +274,9 @@ public:
     }
     return accounts;
   }
+
+    void setCurrency(const std::string &currency);
+
 };
 
 #endif //ACCOUNT_MENU_HPP

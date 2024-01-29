@@ -19,8 +19,6 @@ add_executable(bank
         src/account_menu.hpp
         src/currency.cpp
         src/currency.hpp
-        src/navigation.hpp
-        src/navigation.cpp
         src/transaction.hpp
         src/transaction.cpp
         src/user.hpp)

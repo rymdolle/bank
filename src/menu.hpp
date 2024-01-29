@@ -26,7 +26,7 @@ public:
 
   virtual ~Menu() {}
   //print punts menu
-  void print_title()
+  void print_title() const
   {
     // Print menu title
     std::cout << title << '\n';
@@ -38,7 +38,7 @@ public:
 
   // Virtual function that has to be implemented
   virtual Menu* enter(std::string input) = 0;
-  virtual void display() = 0;
+  virtual void display() const = 0;
 
   void setParent(Menu* parent)
   {

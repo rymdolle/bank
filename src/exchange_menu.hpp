@@ -16,16 +16,17 @@ class ExchangeMenu : public Menu
 {
 private:
     User &user_;
+    Account *targetAcc;
     int step = 0;
-    double amount = 0;
     int accIndex = 0;
+    int userInputInt = 0;
+    double amount = 0;
+    double targetAmount = 0;
+    double exchangeAmount = 0;
+    double tempBalance = 0;
     std::string chosenCurrency;
     std::string userInputStr;
-    int userInputInt;
     std::string targetCurrency;
-    double targetAmount = 0;
-    Account *targetAcc;
-    double tempBalance = 0, exchangeAmount = 0;
 
 public:
 
@@ -124,7 +125,6 @@ public:
             targetAcc->setBalance(tempBalance-amount);
             chosenCurrency = userInputStr;
             Currency tempCurr = Currency::get(targetAcc->getCurrency());
-            std::cout << "amount: " << amount << '\n';
             exchangeAmount = tempCurr.exchangeMonies(chosenCurrency, amount);
         }
 

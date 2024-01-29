@@ -73,7 +73,7 @@ public:
     }
     case step::TRANSFER: {//transaction
       std::string currency = user_.getAccounts()[account_src - 1].getCurrency();
-      std::cout << "Transfered " << Currency::get(currency).format(amount)
+      std::cout << "Transferred " << Currency::get(currency).format(amount)
                 << " from " << '\''
                 << user_.getAccounts()[account_src - 1].getAccountName()
                 << '\''

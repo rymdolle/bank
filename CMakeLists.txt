@@ -22,3 +22,9 @@ add_executable(bank
         src/transaction.hpp
         src/transaction.cpp
         src/user.hpp)
+
+if (UNIX)
+  target_link_libraries(${PROJECT_NAME} odbc)
+elseif (MSVC)
+  target_link_libraries(${PROJECT_NAME} odbc32)
+endif()

@@ -24,12 +24,7 @@ private:
   SQLHENV henv;
   SQLHDBC hdbc;
 public:
-  std::string driver;
-  std::string host;
-  std::string port;
-  std::string database;
-  std::string username;
-  std::string password;
+  std::string connect_string;
 
   Database()
   {
@@ -68,12 +63,6 @@ public:
       return true;
     }
     SQLRETURN ret;
-    //std::stringstream dsn;
-    //dsn << "DRIVER="   << driver   << ';'
-    //    << "SERVER="   << host     << ';'
-    //    << "DATABASE=" << database << ';'
-    //    << "USER="     << username << ';'
-    //    << "PASSWORD=" << password << ';';
 
     // Initialize ODBC environment
     ret = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &henv);
@@ -100,7 +89,7 @@ public:
     // Connect to the MySQL server
     ret = SQLDriverConnect(hdbc,
                            GetDesktopWindow(),
-                           (SQLCHAR*) "DSN=MariaDB-bank;",
+                           (SQLCHAR*) connect_string.c_str(),
                            SQL_NTS,
                            nullptr, 0, nullptr,
                            SQL_DRIVER_COMPLETE);
@@ -124,14 +113,16 @@ public:
     std::string query = "SELECT id, username, password FROM bank.users";
     SQLHSTMT hstmt = nullptr;
     SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
-    SQLPrepare(hstmt, (SQLCHAR*) query.c_str(), SQL_NTS);
-    SQLExecute(hstmt);
+    //SQLPrepare(hstmt, (SQLCHAR*) query.c_str(), SQL_NTS);
+    //SQLExecute(hstmt);
+    SQLRETURN ret;
+    ret = SQLExecDirect(hstmt, (SQLCHAR*) query.c_str(), SQL_NTS);
+    if (!SQL_SUCCEEDED(ret)) {
+      std::cerr << "Could not execute query.\n";
+      return users;
+    }
 
-    SQLLEN count = 0;
-    SQLRowCount(hstmt, &count);
-    for (int i = 0; i < count; ++i) {
-      SQLFetch(hstmt);
-
+    while ((ret = SQLFetch(hstmt)) != SQL_NO_DATA) {
       int id = read_integer(hstmt, 1);
       std::string username = read_string(hstmt, 2);
       std::string password = read_string(hstmt, 3);

@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[])
 {
-  Database db;
+  Database& db = Database::getInstance();
   // db.host = "localhost";
   // db.port = "3306";
   // db.database = "bank";
@@ -20,10 +20,6 @@ int main(int argc, char *argv[])
   if (!db.connect()) {
     std::cerr << "Could not connect to database.\n";
     exit(1);
-  }
-
-  for (auto& user : db.users()) {
-    std::cout << user.getName() << '\n';
   }
 
   User user;

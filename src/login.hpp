@@ -1,6 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+#include "database.hpp"
 #include <iostream>
 #include <vector>
 #include <filesystem>
@@ -89,7 +90,8 @@ bool login(User &currentUser)
     std::cout << "Enter pin code:";
     std::string password = read_password();
 
-    for (User &user : User::loadFromFile("data/users.txt")) {
+    Database& db = Database::getInstance();
+    for (User &user : db.users()) {
       if (user.verify(username, password)) {
           //greeting the user to his account
         std::cout << "\nLogin successful.\n"

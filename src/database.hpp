@@ -38,6 +38,12 @@ public:
     hdbc = nullptr;
   }
 
+  static Database& getInstance()
+  {
+    static Database db;
+    return db;
+  }
+
   bool disconnect()
   {
     if (isConnected()) {

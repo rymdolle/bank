@@ -2,7 +2,7 @@ CREATE TABLE bank.accounts (
        -- id INT NOT NULL IDENTITY(1000, 1), -- SQL Server
        id INT NOT NULL AUTO_INCREMENT, -- MariaDB
        userid INT NOT NULL,
-       accountname TEXT,
+       accountname VARCHAR(64),
        currency CHAR(3) NOT NULL DEFAULT 'SEK',
        balance INT DEFAULT 0,
        PRIMARY KEY (id),

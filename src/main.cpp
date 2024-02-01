@@ -11,8 +11,8 @@
 int main(int argc, char *argv[])
 {
   Database& db = Database::getInstance();
-  //db.connect_string = "DSN=SQLServer-bank;UID=sa;PWD=yourStrong@Password";
-  db.connect_string = "DSN=MariaDB-bank;USER=chas;PASSWORD=secret";
+  db.connect_string = "DSN=SQLServer-bank;UID=chas;PWD=secret";
+  //db.connect_string = "DSN=MariaDB-bank;USER=chas;PASSWORD=secret";
 
   if (!db.connect()) {
     std::cerr << "Could not connect to database.\n";

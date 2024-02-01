@@ -72,6 +72,8 @@ std::string read_password()
     }
   }
 
+  _putch('\n');
+
 #if defined (__linux__) || defined (__APPLE__)
 
   // Restore flags to original state
@@ -90,15 +92,13 @@ bool login(User &currentUser)
     std::cout << "Enter pin code:";
     std::string password = read_password();
 
-    Database& db = Database::getInstance();
-    for (User &user : db.users()) {
-      if (user.verify(username, password)) {
-          //greeting the user to his account
-        std::cout << "\nLogin successful.\n"
-                  << "Welcome " << username << "!\n\n";
-        currentUser = user;
-        return true;
-      }
+    std::vector<User> users = User::loadFromDatabase(username);
+    if (!users.empty() && users[0].verify(username, password)) {
+      //greeting the user to his account
+      std::cout << "\nLogin successful.\n"
+                << "Welcome " << username << "!\n\n";
+      currentUser = users[0];
+      return true;
     }
 
     ++count;

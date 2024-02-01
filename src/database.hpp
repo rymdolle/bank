@@ -1,7 +1,6 @@
 #ifndef BANK_DATABASE_HPP
 #define BANK_DATABASE_HPP
 
-#include "user.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -107,32 +106,30 @@ public:
     return connected_;
   }
 
-  std::vector<User> users()
+  SQLHSTMT execQuery(std::string query)
   {
-    std::vector<User> users;
-    std::string query = "SELECT id, username, password FROM bank.users";
     SQLHSTMT hstmt = nullptr;
-    SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
-    //SQLPrepare(hstmt, (SQLCHAR*) query.c_str(), SQL_NTS);
-    //SQLExecute(hstmt);
     SQLRETURN ret;
-    ret = SQLExecDirect(hstmt, (SQLCHAR*) query.c_str(), SQL_NTS);
+
+    ret = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
     if (!SQL_SUCCEEDED(ret)) {
-      std::cerr << "Could not execute query.\n";
-      return users;
+      std::cerr << "Could not alloc handle.\n";
+      return nullptr;
     }
 
-    while ((ret = SQLFetch(hstmt)) != SQL_NO_DATA) {
-      int id = read_integer(hstmt, 1);
-      std::string username = read_string(hstmt, 2);
-      std::string password = read_string(hstmt, 3);
-
-      users.emplace_back(username, password, id);
+    ret = SQLExecDirect(hstmt, (SQLCHAR*) query.c_str(), query.length());
+    if (!SQL_SUCCEEDED(ret)) {
+      std::cerr << "Could not execute direct.\n";
+      SQLSMALLINT len = 0;
+      SQLCHAR state[6], message[1024];
+      SQLINTEGER native = 0;
+      SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, 1, state, &native, message, 1024, &len);
+      std::cerr << "ERROR *** " << state << ' ' << native << '\n';
+      std::cerr << message << '\n';
+      SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
+      return nullptr;
     }
-
-    // Free statment
-    SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
-    return users;
+    return hstmt;
   }
 
   static int read_integer(SQLHSTMT hstmt, int column)

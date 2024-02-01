@@ -9,6 +9,10 @@
 #include <vector>
 
 #include "account.hpp"
+#include "database.hpp"
+
+#include <sql.h>
+#include <sqltypes.h>
 
 class User {
 
@@ -38,6 +42,28 @@ public:
     bool verify(std::string& name, std::string& password) const {
         return name == name_ && password_ == password;
     }
+
+  static std::vector<User> loadFromDatabase(std::string username)
+  {
+    std::vector<User> users;
+    Database& db = Database::getInstance();
+    std::stringstream query;
+    query << "SELECT id, password "
+          << "FROM bank.users "
+          << "WHERE username = '" << username << "'";
+    SQLHSTMT hstmt = db.execQuery(query.str());
+    if (!hstmt)
+      return users;
+    SQLRETURN ret = SQLFetch(hstmt);
+    if (SQL_SUCCEEDED(ret)) {
+      int id = Database::read_integer(hstmt, 1);
+      std::string password = Database::read_string(hstmt, 2);
+      users.emplace_back(username, password, id);
+    }
+
+    SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
+    return users;
+  }
 
     // Getters
 

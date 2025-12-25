@@ -35,7 +35,7 @@ public:
         return "Name: " + name_ + "\nPin: " + getPassword() + "\nID: " + std::to_string(id_) + "\n";
     }
 
-    bool verify(std::string& name, std::string& password) const {
+    bool verify(const std::string& name, const std::string& password) const {
         return name == name_ && password_ == password;
     }
 
@@ -47,6 +47,10 @@ public:
 
     const std::string& getPassword() const {
         return password_;
+    }
+
+    void setName(const std::string& name) {
+        name_ = name;
     }
 
     int getId() const {
